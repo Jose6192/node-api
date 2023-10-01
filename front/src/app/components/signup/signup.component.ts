@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-signup',
@@ -7,13 +8,22 @@ import { Component } from '@angular/core';
 })
 export class SignupComponent {
 
+  constructor(public authService: AuthService) { }
+
   user = {
     name: '',
     password: ''
   }
 
   signUp() {
-    console.log(this.user);
+    this.authService.signUp(this.user)
+      .subscribe(
+        res => {
+          console.log(res);
+          localStorage.setItem('token', res.token);
+        },
+        err => console.log(err)
+      )
   }
 
 }

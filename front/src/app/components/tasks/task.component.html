@@ -1,1 +1,13 @@
-<p>task works!</p>
+<div class="row">
+    <div class="col-md-4" *ngFor="let task of tasks">
+        <div class="card">
+            <div class="card-body">
+                <h3>{{task.title}}</h3>
+                <p>{{task.description}}</p>
+            </div>
+            <div class="card-footer">
+                {{task.date | date: 'mediumDate'}}
+            </div>
+        </div>
+    </div>
+</div>

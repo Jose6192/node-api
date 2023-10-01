@@ -5,6 +5,8 @@ import { SignupComponent } from './components/signup/signup.component';
 import { SigninComponent } from './components/signin/signin.component';
 import { TaskComponent } from './components/tasks/task.component';
 
+import { AuthGuard } from './auth.guard';
+
 const routes: Routes = [{
   path: '',
   redirectTo: '/tasks',
@@ -17,7 +19,8 @@ const routes: Routes = [{
   component: SigninComponent
 },{
   path: 'tasks',
-  component: TaskComponent
+  component: TaskComponent,
+  canActivate: [AuthGuard]
 }];
 
 @NgModule({

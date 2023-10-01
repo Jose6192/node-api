@@ -30,18 +30,22 @@ router.get('/tasks', verifyToken, (req,res)=>{
     res.send([
         {
             "_id": 1,
-            "title": "titulo",
-            "description": "descripcion"
+            "title": "titulo1",
+            "description": "descripcion1",
+            "date": "2020-06-25T16:00:00.000Z"
         },
         {
             "_id": 2,
-            "title": "titulo",
-            "description": "descripcion"
+            "title": "titulo2",
+            "description": "descripcion2",
+            "date": "2020-06-25T16:00:00.000Z"
+
         },
         {
             "_id": 3,
-            "title": "titulo",
-            "description": "descripcion"
+            "title": "titulo3",
+            "description": "descripcion3",
+            "date": "2020-06-25T16:00:00.000Z"
         }
     ])
 }) 
