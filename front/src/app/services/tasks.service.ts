@@ -13,4 +13,7 @@ export class TasksService {
   getTasks() {
     return this.http.get<any>(this.URL + '/getTasks');
   }
+  postTask(task={nombre:'', titulo:'', descripcion:'', ubicacion:'', departamento:'', prioridad:'', imagen:''}) {
+    return this.http.post<any>(this.URL + '/sendTask', task);
+  }
 }

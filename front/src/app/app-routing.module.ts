@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { SignupComponent } from './components/signup/signup.component';
 import { SigninComponent } from './components/signin/signin.component';
 import { TaskComponent } from './components/tasks/task.component';
+import { ReportFormComponent } from './components/report-form/report-form.component'
 
 import { AuthGuard } from './auth.guard';
 
@@ -21,6 +22,9 @@ const routes: Routes = [{
   path: 'tasks',
   component: TaskComponent,
   canActivate: [AuthGuard]
+},{
+  path: 'report-form',
+  component: ReportFormComponent,
 }];
 
 @NgModule({

@@ -3,6 +3,9 @@
     <a routerLink="/"><img src="../assets/img/logo-universidad.png" alt="Bootstrap"  height="30"></a>
     <div class="navbar-nav ml-auto" id="navbarNav">
       <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/report-form" routerLinkActive="active">Reportar</a>
+        </li>
         <ng-container *ngIf="!authService.loggedIn(); else loggedIn">
           <li class="nav-item">
             <a class="nav-link" routerLink="/signin" routerLinkActive="active">Iniciar sesion</a>
