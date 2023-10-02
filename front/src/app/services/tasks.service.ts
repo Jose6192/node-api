@@ -11,6 +11,6 @@ export class TasksService {
   constructor(private http: HttpClient) { }
 
   getTasks() {
-    return this.http.get<any>(this.URL + '/tasks');
+    return this.http.get<any>(this.URL + '/getTasks');
   }
 }

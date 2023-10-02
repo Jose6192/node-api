@@ -47,8 +47,8 @@ router.get('/getTasks', verifyToken, async (req, res) => {
 
 router.post('/sendTask', async (req, res) => {
     try {
-        const {name, tile, description, location, department, priority, image} = req.body;
-        const newTask = new Task({name, tile, description, location, department, priority, image});
+        const {name, title, description, location, department, priority, image} = req.body;
+        const newTask = new Task({name, title, description, location, department, priority, image});
         await newTask.save();
         res.status(200).send('Tarea registrada exitosamente');
     } catch (error) {

@@ -2,7 +2,7 @@ const {Schema, model} = require('mongoose');
 
 const TaskSchema = new Schema({
     name: String,
-    tile: String,
+    title: String,
     description: String,
     location: String,
     department: String,
