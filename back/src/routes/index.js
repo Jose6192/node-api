@@ -9,55 +9,53 @@ const jwt = require('jsonwebtoken');
 router.get('/', (req, res) => res.send('hello :D'))
 
 router.post('/signUp', async (req, res) => {
-    const {name, password} = req.body;
-    const newUser = new User({name: name, password: password});
-    await newUser.save();
-
-    const token = jwt.sign({_id: newUser._id}, 'secretKey');
-    res.status(200).json({token});
+    try {
+        const {name, password} = req.body;
+        const newUser = new User({name: name, password: password});
+        await newUser.save();
+    
+        const token = jwt.sign({_id: newUser._id}, 'secretKey');
+        res.status(200).json({token});
+    } catch (error) {
+        res.status(500).send('Error al registrar usuario');
+    }
 })
 
 router.post('/signIn', async (req, res ) => {
-    const {name, password} = req.body;
-    const user = await User.findOne({name});
-    if (!user) return res.status(404).send('¡Oh no! Parece que aun no estas registrado');
-    if (user.password !== password) return res.status(401).send('¡Oops! Parece que olvidaste tu contraseña');
-
-    const token = jwt.sign({_id: user._id}, 'secretKey');
-    return res.status(200).json({token});
+    try {
+        const {name, password} = req.body;
+        const user = await User.findOne({name});
+        if (!user) return res.status(404).send('¡Oh no! Parece que aun no estas registrado');
+        if (user.password !== password) return res.status(401).send('¡Oops! Parece que olvidaste tu contraseña');
+    
+        const token = jwt.sign({_id: user._id}, 'secretKey');
+        return res.status(200).json({token});
+    } catch (error) {
+        res.status(500).send('Error al iniciar sesion');
+    }
 })
 
-router.get('/tasks', verifyToken, (req,res)=> {
-    res.send([
-        {
-            "_id": 1,
-            "title": "titulo1",
-            "description": "descripcion1",
-            "date": "2020-06-25T16:00:00.000Z"
-        },
-        {
-            "_id": 2,
-            "title": "titulo2",
-            "description": "descripcion2",
-            "date": "2020-06-25T16:00:00.000Z"
-
-        },
-        {
-            "_id": 3,
-            "title": "titulo3",
-            "description": "descripcion3",
-            "date": "2020-06-25T16:00:00.000Z"
-        }
-    ])
-})
+router.get('/getTasks', verifyToken, async (req, res) => {
+    try {
+        const tasks = await Task.find();
+        res.status(200).json(tasks);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error al obtener tareas');
+    }
+});
 
 router.post('/sendTask', async (req, res) => {
-    const {name, tile, description, location, department, priority, image} = req.body;
-    const newTask = new Task({name, tile, description, location, department, priority, image});
-    await newTask.save();
-
-    res.status(200).send('tareas registradas');
-})
+    try {
+        const {name, tile, description, location, department, priority, image} = req.body;
+        const newTask = new Task({name, tile, description, location, department, priority, image});
+        await newTask.save();
+        res.status(200).send('Tarea registrada exitosamente');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error al registrar la tarea');
+    }
+});
 
 module.exports = router;
 
