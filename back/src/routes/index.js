@@ -2,6 +2,7 @@ const {Router} = require('express');
 const router = Router();
 
 const User = require('../models/user');
+const Task = require('../models/task')
 
 const jwt = require('jsonwebtoken');
 
@@ -26,7 +27,7 @@ router.post('/signIn', async (req, res ) => {
     return res.status(200).json({token});
 })
 
-router.get('/tasks', verifyToken, (req,res)=>{
+router.get('/tasks', verifyToken, (req,res)=> {
     res.send([
         {
             "_id": 1,
@@ -48,10 +49,17 @@ router.get('/tasks', verifyToken, (req,res)=>{
             "date": "2020-06-25T16:00:00.000Z"
         }
     ])
-}) 
+})
+
+router.post('/sendTask', async (req, res) => {
+    const {name, tile, description, location, department, priority, image} = req.body;
+    const newTask = new Task({name, tile, description, location, department, priority, image});
+    await newTask.save();
+
+    res.status(200).send('tareas registradas');
+})
 
 module.exports = router;
-
 
 function verifyToken(req, res, next){
     if(!req.headers.authorization){
