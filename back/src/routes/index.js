@@ -8,6 +8,8 @@ const jwt = require('jsonwebtoken');
 
 router.get('/', (req, res) => res.send('hello :D'))
 
+/* user */
+
 router.post('/signUp', async (req, res) => {
     try {
         const {name, password} = req.body;
@@ -35,6 +37,8 @@ router.post('/signIn', async (req, res ) => {
     }
 })
 
+/* task */
+
 router.get('/getTasks', verifyToken, async (req, res) => {
     try {
         const tasks = await Task.find();
@@ -54,6 +58,35 @@ router.post('/sendTask', async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).send('Error al registrar la tarea');
+    }
+});
+
+router.delete('/deleteTask/:taskId', verifyToken, async (req, res) => {
+    try {
+        const taskId = req.params.taskId;
+        const task = await Task.findById(taskId);
+        if (!task) {
+            return res.status(404).json({ message: 'Tarea no encontrada' });
+        }
+        await task.deleteOne();
+        res.status(200).send('Se elimino la tarea con exito');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error al eliminar la tarea');
+    }
+})
+
+router.get('/getTask/:taskId', verifyToken, async (req, res) => {
+    try {
+        const taskId = req.params.taskId;
+        const task = await Task.findById(taskId);
+        if (!task) {
+            return res.status(404).json({ message: 'Tarea no encontrada' });
+        }
+        res.status(200).json(task);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error al obtener la tarea');
     }
 });
 
