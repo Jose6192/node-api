@@ -1,34 +1,44 @@
-<div class="container mt-5">
-    <h2>Formulario para enviar reporte</h2>
-    <form (submit)="sendReport()" id="form">
-        <div class="form-group">
-            <label for="name">Nombre:</label>
-            <input type="text" class="form-control" [(ngModel)]="task.nombre"id="name" name="name" required>
+<div class="row">
+    <div class="col-md-4 mx-auto">
+        <div class="card">
+            <div class="card-header">
+                enviar un reporte
+            </div>
+            <div class="card-body">
+                <form (submit)="sendReport()">
+                    <div class="form-group">
+                        <label for="name">Nombre:</label>
+                        <input type="text" [(ngModel)]="task.name" name="name" required autofocus>
+                    </div>
+                    <div class="form-group">
+                        <label for="title">Titulo:</label>
+                        <input type="text" [(ngModel)]="task.title" name="title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Descripcion:</label>
+                        <input type="text" [(ngModel)]="task.description" name="description" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="location">Localizacion:</label>
+                        <input type="text" [(ngModel)]="task.location" name="location" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="department">Departamento:</label>
+                        <input type="text" [(ngModel)]="task.department" name="department" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="priority">Prioridad:</label>
+                        <input type="text" [(ngModel)]="task.priority" name="priority" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="image">Imagen:</label>
+                        <input type="text" [(ngModel)]="task.image" name="image" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block ">
+                        Registrarse
+                    </button>
+                </form>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="title">Título:</label>
-            <input type="text" class="form-control" [(ngModel)]="task.titulo" id="title" name="title" required>
-        </div>
-        <div class="form-group">
-            <label for="description">Descripción:</label>
-            <textarea class="form-control" id="description" [(ngModel)]="task.descripcion" name="description" rows="3" required></textarea>
-        </div>
-        <div class="form-group">
-            <label for="location">Ubicación:</label>
-            <input type="text" class="form-control" [(ngModel)]="task.ubicacion" id="location" name="location" required>
-        </div>
-        <div class="form-group">
-            <label for="department">Departamento:</label>
-            <input type="text" class="form-control" [(ngModel)]="task.departamento" id="department" name="department" required>
-        </div>
-        <div class="form-group">
-            <label for="priority">Prioridad:</label>
-            <input type="text" class="form-control" [(ngModel)]="task.prioridad" id="priority" name="priority" required>
-        </div>
-        <div class="form-group">
-            <label for="image">Imagen:</label>
-            <input type="text" class="form-control" [(ngModel)]="task.imagen" id="image" name="image" required>
-        </div>
-        <button type="submit" class="btn btn-primary">Enviar reporte</button>
-    </form>
+    </div>
 </div>

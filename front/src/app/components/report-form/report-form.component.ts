@@ -11,16 +11,23 @@ export class ReportFormComponent {
   constructor( private taskService:TasksService){}
 
   task = {
-    nombre:'', titulo:'', descripcion:'', ubicacion:'', departamento:'', prioridad:'', imagen:''
-  };
+    name: '',
+    title: '',
+    description: '',
+    location: '',
+    department: '',
+    priority: '',
+    image: ''
+  }
   
   sendReport(){
-    console.log(this.task);
     this.taskService.postTask(this.task)
-     .subscribe(
-      res => console.log(JSON.stringify(res)),
-      err => console.log(err)
-     )
+      .subscribe(
+        res => {
+          console.log(res);
+        },
+        err => console.log(err)
+      )
   }
 
 }
