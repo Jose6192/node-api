@@ -76,6 +76,24 @@ router.delete('/deleteTask/:taskId', verifyToken, async (req, res) => {
     }
 })
 
+router.patch('/updateTask/:taskId', verifyToken, async (req, res) => {
+    try {
+        const taskId = req.params.taskId;
+        const updates = req.body;
+        
+        const task = await Task.findById(taskId);
+        if (!task) {
+            return res.status(404).json({ message: 'Tarea no encontrada' });
+        }
+
+        await Task.updateOne({ _id: taskId }, { $set: updates });
+
+        res.status(200).json({ message: 'Tarea actualizada con éxito'});
+    } catch (error) {
+        res.status(400).send('Error al actualizar la tarea');
+    }
+});
+
 router.get('/getTask/:taskId', verifyToken, async (req, res) => {
     try {
         const taskId = req.params.taskId;
