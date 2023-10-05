@@ -3,7 +3,8 @@ const {Schema, model} = require ('mongoose');
 
 const UserSchema = new Schema ({
     name: String,
-    password: String
+    password: String,
+    rol: String
 },{
     timestamps: true})
 
