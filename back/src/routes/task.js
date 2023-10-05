@@ -5,7 +5,7 @@ const Task = require('../models/task')
 
 const jwt = require('jsonwebtoken');
 
-router.get('/getTasks', verifyToken, async (req, res) => {
+router.get('/tasks/get', verifyToken, async (req, res) => {
     try {
         const tasks = await Task.find();
         res.status(200).json(tasks);
@@ -15,7 +15,21 @@ router.get('/getTasks', verifyToken, async (req, res) => {
     }
 });
 
-router.post('/sendTask', async (req, res) => {
+router.get('/tasks/get/:taskId', verifyToken, async (req, res) => {
+    try {
+        const taskId = req.params.taskId;
+        const task = await Task.findById(taskId);
+        if (!task) {
+            return res.status(404).json({ message: 'Tarea no encontrada' });
+        }
+        res.status(200).json(task);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error al obtener la tarea');
+    }
+});
+
+router.post('/tasks/create', async (req, res) => {
     try {
         const {name, title, description, location, department, priority, image} = req.body;
         const newTask = new Task({name, title, description, location, department, priority, image});
@@ -27,7 +41,7 @@ router.post('/sendTask', async (req, res) => {
     }
 });
 
-router.delete('/deleteTask/:taskId', verifyToken, async (req, res) => {
+router.delete('/tasks/delete/:taskId', verifyToken, async (req, res) => {
     try {
         const taskId = req.params.taskId;
         const task = await Task.findById(taskId);
@@ -42,7 +56,7 @@ router.delete('/deleteTask/:taskId', verifyToken, async (req, res) => {
     }
 })
 
-router.patch('/updateTask/:taskId', verifyToken, async (req, res) => {
+router.patch('/tasks/update/:taskId', verifyToken, async (req, res) => {
     try {
         const taskId = req.params.taskId;
         const updates = req.body;
@@ -57,20 +71,6 @@ router.patch('/updateTask/:taskId', verifyToken, async (req, res) => {
         res.status(200).json({ message: 'Tarea actualizada con éxito'});
     } catch (error) {
         res.status(400).send('Error al actualizar la tarea');
-    }
-});
-
-router.get('/getTask/:taskId', verifyToken, async (req, res) => {
-    try {
-        const taskId = req.params.taskId;
-        const task = await Task.findById(taskId);
-        if (!task) {
-            return res.status(404).json({ message: 'Tarea no encontrada' });
-        }
-        res.status(200).json(task);
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Error al obtener la tarea');
     }
 });
 
