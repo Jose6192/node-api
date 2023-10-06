@@ -2,39 +2,39 @@
     <div class="col-md-4 mx-auto">
         <div class="card">
             <div class="card-header">
-                enviar un reporte
+                <h5 class="mb-0">Enviar un Reporte</h5>
             </div>
             <div class="card-body">
                 <form (submit)="sendReport()">
-                    <div class="form-group">
-                        <label for="name">Nombre:</label>
-                        <input type="text" [(ngModel)]="task.name" name="name" required autofocus>
+                    <div class="form-group mb-3">
+                        <label for="name">Tu Nombre:</label>
+                        <input type="text" [(ngModel)]="task.name" name="name" id="name" class="form-control" required autofocus>
                     </div>
-                    <div class="form-group">
-                        <label for="title">Titulo:</label>
-                        <input type="text" [(ngModel)]="task.title" name="title" required>
+                    <div class="form-group mb-3">
+                        <label for="title">Título:</label>
+                        <input type="text" [(ngModel)]="task.title" name="title" id="title" class="form-control" required="">
                     </div>
-                    <div class="form-group">
-                        <label for="description">Descripcion:</label>
-                        <input type="text" [(ngModel)]="task.description" name="description" required>
+                    <div class="form-group mb-3">
+                        <label for="description">Descripción:</label>
+                        <input type="text" [(ngModel)]="task.description" name="description" id="description" class="form-control" required>
                     </div>
-                    <div class="form-group">
-                        <label for="location">Localizacion:</label>
-                        <input type="text" [(ngModel)]="task.location" name="location" required>
+                    <div class="form-group mb-3">
+                        <label for="location">Localización:</label>
+                        <input type="text" [(ngModel)]="task.location" name="location" id="location" class="form-control" required>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group mb-3">
                         <label for="department">Departamento:</label>
-                        <input type="text" [(ngModel)]="task.department" name="department" required>
+                        <input type="text" [(ngModel)]="task.department" name="department" id="department" class="form-control" required>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group mb-3">
                         <label for="priority">Prioridad:</label>
-                        <input type="text" [(ngModel)]="task.priority" name="priority" required>
+                        <input type="text" [(ngModel)]="task.priority" name="priority" id="priority" class="form-control" required>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group mb-3">
                         <label for="image">Imagen:</label>
-                        <input type="text" [(ngModel)]="task.image" name="image" required>
+                        <input type="text" [(ngModel)]="task.image" name="image" id="image" class="form-control" required>
                     </div>
-                    <button type="submit" class="btn btn-primary btn-block ">
+                    <button type="submit" class="btn btn-primary btn-block">
                         Registrarse
                     </button>
                 </form>

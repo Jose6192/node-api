@@ -1,28 +1,34 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-  <div class="container-fluid">
-    <a routerLink="/"><img src="../assets/img/logo-universidad.png" alt="Bootstrap"  height="30"></a>
-    <div class="navbar-nav ml-auto" id="navbarNav">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container">
+    <img src="../assets/img/logo-universidad.png" height="24" alt="logo UTRM">
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
       <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/report-form" routerLinkActive="active">Reportar</a>
-        </li>
         <ng-container *ngIf="!authService.loggedIn(); else loggedIn">
           <li class="nav-item">
-            <a class="nav-link" routerLink="/signin" routerLinkActive="active">Iniciar sesion</a>
+            <a class="nav-link" routerLink="/report-form" routerLinkActive="active">Hacer un reporte</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/signin" routerLinkActive="active">Iniciar sesión</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" routerLink="/signup" routerLinkActive="active">Registrarse</a>
           </li>
         </ng-container>
         <ng-template #loggedIn>
-          <li class="nav-item" role="button">
-            <a class="nav-link" (click)="authService.logOut()">Cerrar sesion</a>
+          <li class="nav-item">
+            <a class="nav-link" role="button" (click)="authService.logOut()">Cerrar sesión</a>
           </li>
         </ng-template>
       </ul>
     </div>
   </div>
 </nav>
+
 <div class="container p-5">
   <router-outlet></router-outlet>
 </div>

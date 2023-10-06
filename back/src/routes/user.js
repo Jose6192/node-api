@@ -16,7 +16,7 @@ router.post('/users/signup', async (req, res) => {
         const token = jwt.sign({_id: newUser._id}, 'secretKey');
         res.status(200).json({token});
     } catch (error) {
-        res.status(500).send('Error al registrar usuario');
+        res.status(500).json({ message: 'Error al registrar usuario' });
     }
 })
 
@@ -24,15 +24,16 @@ router.post('/users/signin', async (req, res ) => {
     try {
         const {name, password} = req.body;
         const user = await User.findOne({name});
-        if (!user) return res.status(404).send('¡Oh no! Parece que aun no estas registrado');
-        if (user.password !== password) return res.status(401).send('¡Oops! Parece que olvidaste tu contraseña');
+        if (!user) return res.status(404).json({ message: '¡Oh no! Parece que aun no estas registrado' });
+        if (user.password !== password) return res.status(401).json({ message: '¡Oops! Parece que olvidaste tu contraseña' });
     
         const token = jwt.sign({_id: user._id}, 'secretKey');
         return res.status(200).json({token});
     } catch (error) {
-        res.status(500).send('Error al iniciar sesion');
+        res.status(500).json({ message: 'Error al iniciar sesion' });
     }
 })
+
 
 module.exports = router;
 
