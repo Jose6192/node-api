@@ -21,7 +21,7 @@ export class ReportFormComponent {
   }
   
   sendReport(){
-    this.taskService.postTask(this.task)
+    this.taskService.createTask(this.task)
       .subscribe(
         res => {
           console.log(res);
@@ -29,5 +29,4 @@ export class ReportFormComponent {
         err => console.log(err)
       )
   }
-
 }

@@ -9,16 +9,16 @@ router.get('/', (req, res) => res.send('hello :D'))
 
 router.post('/users/signup', async (req, res) => {
     try {
-        const {name, password, rol} = req.body;
-        const newUser = new User({name: name, password: password, rol:rol});
+        const { name, password, rol } = req.body;
+        const newUser = new User({ name, password, rol });
         await newUser.save();
-    
-        const token = jwt.sign({_id: newUser._id}, 'secretKey');
-        res.status(200).json({token});
+
+        const token = jwt.sign({ _id: newUser._id, role: newUser.rol }, 'secretKey');
+        res.status(200).json({ token });
     } catch (error) {
         res.status(500).json({ message: 'Error al registrar usuario' });
     }
-})
+});
 
 router.post('/users/signin', async (req, res ) => {
     try {
@@ -32,14 +32,27 @@ router.post('/users/signin', async (req, res ) => {
     } catch (error) {
         res.status(500).json({ message: 'Error al iniciar sesion' });
     }
-})
+});
 
+router.get('/users/get/:userId', verifyToken, async (req, res) => {
+    try {
+        const userId = req.params.userId;
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: 'Usuario no encontrado' });
+        }
+        res.status(200).json(user);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error al obtener el usuario' });
+    }
+});
 
 module.exports = router;
 
 function verifyToken(req, res, next){
     if(!req.headers.authorization){
-        res.status(401).send("¡Oops! Parece que no tienes la contraseña para ver esto");
+        res.status(401).json({ message: 'no tienes la contraseña para ver esto' });
     }
 
     const token = req.headers.authorization.split(' ')[1];

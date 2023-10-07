@@ -5,8 +5,10 @@
                 <h3>{{task.title}}</h3>
                 <p>{{task.description}}</p>
             </div>
-            <div class="card-footer">
+            <div class="card-footer justify-content-between">
                 {{task.createdAt | date: 'mediumDate'}}
+                <button class="btn btn-primary">Editar</button>
+                <button class="btn btn-danger">Eliminar</button>
             </div>
         </div>
     </div>

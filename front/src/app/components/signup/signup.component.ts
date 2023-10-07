@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -8,11 +9,12 @@ import { AuthService } from '../../services/auth.service';
 })
 export class SignupComponent {
 
-  constructor(public authService: AuthService) { }
+  constructor(public authService: AuthService, private router:Router) { }
 
   user = {
     name: '',
-    password: ''
+    password: '',
+    rol: ''
   }
 
   signUp() {
@@ -21,6 +23,7 @@ export class SignupComponent {
         res => {
           console.log(res);
           localStorage.setItem('token', res.token);
+          this.router.navigate(['/tasks']);
         },
         err => console.log(err)
       )

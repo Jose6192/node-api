@@ -11,12 +11,12 @@ export class AuthService {
 
   private URL = 'http://localhost:3000';
 
-  signUp(user: { name: string; password: string; }) {
-    return this.http.post<any>(this.URL + '/signup', user);
+  signUp(user: { name: string; password: string; rol: String; }) {
+    return this.http.post<any>(this.URL + '/users/signup', user);
   }
 
   signIn(user: { name: string; password: string; }) {
-    return this.http.post<any>(this.URL + '/signin', user);
+    return this.http.post<any>(this.URL + '/users/signin', user);
   }
 
   loggedIn() {
@@ -30,6 +30,10 @@ export class AuthService {
 
   getToken() {
     return localStorage.getItem('token');
+  }
+
+  getDataUser(id:String){
+    return this.http.get<any>(this.URL + '/users/get/' + id);
   }
 
 
