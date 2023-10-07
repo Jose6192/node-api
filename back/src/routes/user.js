@@ -7,7 +7,8 @@ const jwt = require('jsonwebtoken');
 
 router.get('/', (req, res) => res.send('hello :D'))
 
-router.post('/users/signup', async (req, res) => {
+router.post('/users/signup', verifyToken, async (req, res) => {
+    if (req.UserRol !== 'admin') return res.status(401).json({ message: 'No tienes permiso para crear usuarios' });
     try {
         const { name, password, rol } = req.body;
         const newUser = new User({ name, password, rol });
@@ -27,7 +28,7 @@ router.post('/users/signin', async (req, res ) => {
         if (!user) return res.status(404).json({ message: '¡Oh no! Parece que aun no estas registrado' });
         if (user.password !== password) return res.status(401).json({ message: '¡Oops! Parece que olvidaste tu contraseña' });
     
-        const token = jwt.sign({_id: user._id}, 'secretKey');
+        const token = jwt.sign({_id: user._id, role: user.rol}, 'secretKey');
         return res.status(200).json({token});
     } catch (error) {
         res.status(500).json({ message: 'Error al iniciar sesion' });
@@ -52,15 +53,16 @@ module.exports = router;
 
 function verifyToken(req, res, next){
     if(!req.headers.authorization){
-        res.status(401).json({ message: 'no tienes la contraseña para ver esto' });
+        res.status(401).json({ message: 'No tienes Permisos para hacer esto' });
     }
 
     const token = req.headers.authorization.split(' ')[1];
     if (token === 'null'){
-        res.status(401).send("¡Oops! Parece que no tienes la contraseña para ver esto");
+        res.status(401).send("No tienes Permisos para hacer esto");
     }
 
     const payload = jwt.verify(token, 'secretKey');
     req.UserId = payload._id;
+    req.UserRol = payload.role;
     next();
 }
