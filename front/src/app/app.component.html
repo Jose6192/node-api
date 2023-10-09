@@ -9,24 +9,45 @@
     <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
       <ul class="navbar-nav">
         <ng-container *ngIf="!authService.loggedIn(); else loggedIn">
+          <!-- public links -->
           <li class="nav-item">
             <a class="nav-link" routerLink="/report-form" routerLinkActive="active">Hacer un reporte</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" routerLink="/signin" routerLinkActive="active">Iniciar sesión</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/signup" routerLinkActive="active">Registrarse</a>
-          </li>
         </ng-container>
-
+        <!-- logged links -->
         <ng-template #loggedIn>
           <li class="nav-item">
             <a class="nav-link" routerLink="/report-form" routerLinkActive="active">Hacer un reporte</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" role="button" (click)="authService.logOut()">Cerrar sesión</a>
-          </li>
+            <ng-container *ngIf="getRole() === 'Admin'">
+              <!-- only Admin -->
+              <li class="nav-item">
+                <a class="nav-link" routerLink="/signup" routerLinkActive="active">Registar usuario</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" role="button" (click)="authService.logOut()">Cerrar sesión</a>
+              </li>
+            </ng-container>
+
+            <ng-container *ngIf="getRole() === 'Tecnico'">
+              <!-- only Tecnico -->
+              <li class="nav-item">
+                <a class="nav-link" routerLink="/" routerLinkActive="active">Generar ficha tecnica</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" role="button" (click)="authService.logOut()">Cerrar sesión</a>
+              </li>
+            </ng-container>
+
+            <ng-container *ngIf="getRole() === 'Mantenimiento'">
+              <!-- only Mantenimiento add <li> -->
+              <li class="nav-item">
+                <a class="nav-link" role="button" (click)="authService.logOut()">Cerrar sesión</a>
+              </li> 
+            </ng-container>
         </ng-template>
       </ul>
     </div>

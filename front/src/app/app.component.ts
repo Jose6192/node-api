@@ -9,11 +9,10 @@ import { AuthService } from './services/auth.service';
 export class AppComponent {
   constructor( public authService: AuthService ) { }
 
-  id = '';
+  getRole(){
+    const data = this.authService.getDataUser();
+    return data.role;
+  }
 
- /*  isAdmin(){
-
-    this.authService.getDataUser()
-  } */
 }
 

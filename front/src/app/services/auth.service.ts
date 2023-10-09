@@ -32,18 +32,14 @@ export class AuthService {
   getToken() {
     return localStorage.getItem('token');
   }
- 
-/* CAMBIAR IS ADMMIN O poner funcion GET ROLE ????*/
 
-  isAdmin(): boolean {
-    const token = localStorage.getItem('token');
-    return !!token && this.jwtHelper.decodeToken(token).role === 'admin';
+  getDataUser(){
+    const token = localStorage.getItem('token')
+    if(token){
+      return this.jwtHelper.decodeToken(token);
+    }else{
+      return console.log('error al obtener los datos del usuario');
+    } 
   }
-
-  getDataUser(id:String){
-    return this.http.get<any>(this.URL + '/users/get/' + id);
-  }
-
-
   
 }

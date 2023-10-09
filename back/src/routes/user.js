@@ -8,7 +8,7 @@ const jwt = require('jsonwebtoken');
 router.get('/', (req, res) => res.send('hello :D'))
 
 router.post('/users/signup', verifyToken, async (req, res) => {
-    if (req.UserRol !== 'admin') return res.status(401).json({ message: 'No tienes permiso para crear usuarios' });
+    if (req.UserRol !== 'Admin') return res.status(401).json({ message: 'No tienes permiso para crear usuarios' });
     try {
         const { name, password, rol } = req.body;
         const newUser = new User({ name, password, rol });
