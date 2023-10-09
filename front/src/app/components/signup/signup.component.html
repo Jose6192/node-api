@@ -13,8 +13,11 @@
                         <input type="password" [(ngModel)]="user.password" name="password" class="form-control" placeholder="Contraseña" required>
                     </div>
                     <div class="form-group mb-4">
-                        <input type="textx" [(ngModel)]="user.rol" name="rol" class="form-control" placeholder="Tecnico/Mantenimiento" required>
-                    </div>
+                        <select [(ngModel)]="user.rol" name="rol" class="form-select" aria-label="Default select example" required>
+                          <option value="Tecnico">Técnico</option>
+                          <option value="Mantenimiento">Mantenimiento</option>
+                        </select>
+                    </div>                      
                     <button class="btn btn-primary btn-block">
                         Registrar
                     </button>

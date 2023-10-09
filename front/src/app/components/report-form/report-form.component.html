@@ -20,15 +20,31 @@
                     </div>
                     <div class="form-group mb-3">
                         <label for="location">Localización:</label>
-                        <input type="text" [(ngModel)]="task.location" name="location" id="location" class="form-control" required>
-                    </div>
+                        <input list="locations" type="text" [(ngModel)]="task.location" name="location" id="location" class="form-control" required>
+                        <datalist id="locations">
+                            <option value="Edificio E"></option>
+                            <option value="Edificio D"></option>
+                            <option value="Edificio F"></option>
+                            <option value="Edificio L"></option>
+                            <option value="Edificio C"></option>                            
+                            <option value="Edificio N"></option>
+                            <option value="Cancha deportiva"></option>
+                        </datalist>
+                    </div>                    
                     <div class="form-group mb-3">
                         <label for="department">Departamento:</label>
-                        <input type="text" [(ngModel)]="task.department" name="department" id="department" class="form-control" required>
+                        <select [(ngModel)]="task.department" name="department" class="form-select" aria-label="Default select example" required>
+                            <option value="Sistemas">Sistemas</option>
+                            <option value="Mantenimiento">Mantenimiento</option>
+                        </select>
                     </div>
                     <div class="form-group mb-3">
                         <label for="priority">Prioridad:</label>
-                        <input type="text" [(ngModel)]="task.priority" name="priority" id="priority" class="form-control" required>
+                        <select [(ngModel)]="task.priority" name="priority" class="form-select" aria-label="Default select example" required>
+                            <option value="Baja">Baja</option>
+                            <option value="Media">Media</option>
+                            <option value="Alta">Alta</option>
+                        </select>
                     </div>
                     <div class="form-group mb-3">
                         <label for="image">Imagen:</label>

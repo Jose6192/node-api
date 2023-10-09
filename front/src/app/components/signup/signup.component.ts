@@ -20,9 +20,7 @@ export class SignupComponent {
   signUp() {
     this.authService.signUp(this.user)
       .subscribe(
-        res => {
-          console.log(res);
-          localStorage.setItem('token', res.token);
+        res => {          
           this.router.navigate(['/tasks']);
         },
         err => console.log(err)
