@@ -5,6 +5,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule, HttpInterceptor } from '@angular/c
 
 import { AuthGuard } from './auth.guard';
 import { TokenInterceptorService } from './services/token-interceptor.service';
+import { JwtModule, JwtHelperService } from '@auth0/angular-jwt';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -25,7 +26,14 @@ import { ReportFormComponent } from './components/report-form/report-form.compon
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: function  tokenGetter() {
+          return localStorage.getItem('token');
+        }
+      },
+    }),
   ],
   providers: [
     AuthGuard,
@@ -33,7 +41,8 @@ import { ReportFormComponent } from './components/report-form/report-form.compon
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,
       multi: true
-    }
+    },
+    JwtHelperService
   ],
   bootstrap: [AppComponent]
 })

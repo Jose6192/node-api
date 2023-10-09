@@ -78,15 +78,16 @@ module.exports = router;
 
 function verifyToken(req, res, next){
     if(!req.headers.authorization){
-        res.status(401).send("¡Oops! Parece que no tienes la contraseña para ver esto");
+        res.status(401).json({ message: 'No tienes Permisos para hacer esto' });
     }
 
     const token = req.headers.authorization.split(' ')[1];
     if (token === 'null'){
-        res.status(401).send("¡Oops! Parece que no tienes la contraseña para ver esto");
+        res.status(401).send("No tienes Permisos para hacer esto");
     }
 
     const payload = jwt.verify(token, 'secretKey');
     req.UserId = payload._id;
+    req.UserRol = payload.role;
     next();
 }

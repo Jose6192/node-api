@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { Router } from '@angular/router';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router, public jwtHelper: JwtHelperService) { }
 
   private URL = 'http://localhost:3000';
 
@@ -30,6 +31,13 @@ export class AuthService {
 
   getToken() {
     return localStorage.getItem('token');
+  }
+ 
+/* CAMBIAR IS ADMMIN O poner funcion GET ROLE ????*/
+
+  isAdmin(): boolean {
+    const token = localStorage.getItem('token');
+    return !!token && this.jwtHelper.decodeToken(token).role === 'admin';
   }
 
   getDataUser(id:String){
