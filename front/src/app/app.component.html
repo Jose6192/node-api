@@ -35,7 +35,7 @@
             <ng-container *ngIf="getRole() === 'Tecnico'">
               <!-- only Tecnico -->
               <li class="nav-item">
-                <a class="nav-link" routerLink="/" routerLinkActive="active">Generar ficha tecnica</a>
+                <a class="nav-link" routerLink="/technical-form" routerLinkActive="active">Generar ficha tecnica</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" role="button" (click)="authService.logOut()">Cerrar sesión</a>
