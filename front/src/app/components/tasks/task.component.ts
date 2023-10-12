@@ -22,4 +22,9 @@ export class TaskComponent implements OnInit{
       )
   }
 
+  onCardClick(task:any){
+    this.tasksService.getTasksById(task._id)
+      .subscribe(res => console.log(res), err => console.log(err))
+  }
+
 }
