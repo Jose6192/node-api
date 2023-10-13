@@ -9,11 +9,18 @@
             <div class="card-body">
                 <h3>{{task.title}}</h3>
                 <p>{{task.description}}</p>
+                <div *ngIf="task === selectedTask">
+                    <p><b>Reportado por:</b> {{task.name}}</p>
+                    <p><b>Localizacion:</b> {{task.location}}</p>
+                    <p><b>Departamento:</b> {{task.department}}</p>
+                    <p><b>Prioridad:</b>Prioridad: {{task.priority}}</p>
+                    <p><b>Imagen:</b> {{task.image}}</p>
+                    <button class="btn btn-primary">Editar</button>
+                    <button class="btn btn-danger">Eliminar</button>
+                </div>
             </div>
             <div class="card-footer justify-content-between">
                 {{task.createdAt | date: 'mediumDate'}}
-                <button class="btn btn-primary">Editar</button>
-                <button class="btn btn-danger">Eliminar</button>
             </div>
         </div>
     </div>

@@ -9,6 +9,7 @@ import { TasksService } from '../../services/tasks.service';
 export class TaskComponent implements OnInit{
 
   tasks: any[] = [];
+  selectedTask: any;
 
   constructor(public tasksService: TasksService) { }
 
@@ -22,9 +23,8 @@ export class TaskComponent implements OnInit{
       )
   }
 
-  onCardClick(task:any){
-    this.tasksService.getTasksById(task._id)
-      .subscribe(res => console.log(res), err => console.log(err))
-  }
+  onCardClick(task: any) {
+    this.selectedTask = this.selectedTask === task ? null : task;
+}
 
 }
