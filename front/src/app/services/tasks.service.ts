@@ -22,7 +22,7 @@ export class TasksService {
   deleteTask(id:String){
     return this.http.delete<any>(this.URL + '/tasks/delete/' + id);
   }
-  /* updateTask(id:String){
-    return this.http.get<any>(this.URL + '/tasks/update/' + id);
-  } */
+  transferTask(id: string, updates: { department: string }) {
+    return this.http.patch<any>(this.URL + '/tasks/update/' + id, updates);
+  }
 }

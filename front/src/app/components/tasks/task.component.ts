@@ -22,8 +22,8 @@ export class TaskComponent implements OnInit{
         err => console.log(err)
       );
   }
-  //alterna entre seleccionar y deseleccionar la misma tarjeta 
-  onCardClick(task: any) {
+  
+  onCardClick(task: any) { //alterna entre seleccionar y deseleccionar la misma tarjeta 
     this.selectedTask = this.selectedTask === task ? null : task;
   }
 
@@ -32,7 +32,26 @@ export class TaskComponent implements OnInit{
     this.tasksService.deleteTask(task._id)
       .subscribe();
     if(answer){
-      this.tasks.splice(i,1)
+      this.tasks.splice(i,1) //elimina del arreglo la tarea para no tener que cargar la pagina
     }
   }
+
+  transferTask(i: number, task: any) {
+    let answer = confirm('¿Estás seguro de querer transferir esta tarea?');
+    if (answer) {
+      // Cambiar el valor de departmento
+      const newDepartment = task.department === 'Sistemas' ? 'Mantenimiento' : 'Sistemas';
+  
+      const updates = { department: newDepartment };
+  
+      this.tasksService.transferTask(task._id, updates)
+        .subscribe(
+          res => {
+            this.tasks.splice(i, 1); // Elimina del arreglo la tarea después de la solicitud exitosa
+          },
+          err => console.log(err)
+        );
+    }
+  }
+  
 }

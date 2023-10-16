@@ -13,13 +13,14 @@
                     <p><b>Reportado por:</b> {{task.name}}</p>
                     <p><b>Localizacion:</b> {{task.location}}</p>
                     <p><b>Departamento:</b> {{task.department}}</p>
-                    <p><b>Prioridad:</b>Prioridad: {{task.priority}}</p>
+                    <p><b>Prioridad:</b> {{task.priority}}</p>
                     <p><b>Imagen:</b> {{task.image}}</p>
-                    <button class="btn btn-primary">Editar</button>
+                    <button class="btn btn-success" >Finalizar</button>
+                    <button class="btn btn-primary" (click)="transferTask(i, task)">Transferir</button>
                     <button class="btn btn-danger" (click)="deleteTask(i, task)">Eliminar</button>
                 </div>
             </div>
-            <div class="card-footer justify-content-between">
+            <div class="card-footer justify-content-between low-priority-footer" [ngClass]="{'low-priority-footer': task.priority === 'Baja', 'medium-priority-footer': task.priority === 'Media', 'high-priority-footer': task.priority=== 'Alta'}">
                 {{task.createdAt | date: 'mediumDate'}}
             </div>
         </div>
