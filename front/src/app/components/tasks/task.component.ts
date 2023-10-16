@@ -20,11 +20,19 @@ export class TaskComponent implements OnInit{
           this.tasks = res;
         },
         err => console.log(err)
-      )
+      );
   }
-
+  //alterna entre seleccionar y deseleccionar la misma tarjeta 
   onCardClick(task: any) {
     this.selectedTask = this.selectedTask === task ? null : task;
-}
+  }
 
+  deleteTask(i: number, task:any){
+    let answer = confirm('¿Estas seguro de querer eliminarlo?');
+    this.tasksService.deleteTask(task._id)
+      .subscribe();
+    if(answer){
+      this.tasks.splice(i,1)
+    }
+  }
 }

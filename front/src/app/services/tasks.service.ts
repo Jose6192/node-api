@@ -20,9 +20,9 @@ export class TasksService {
     return this.http.post<any>(this.URL + '/tasks/create', task);
   }
   deleteTask(id:String){
-    return this.http.get<any>(this.URL + '/tasks/delete/' + id);
+    return this.http.delete<any>(this.URL + '/tasks/delete/' + id);
   }
-  updateTask(id:String){
+  /* updateTask(id:String){
     return this.http.get<any>(this.URL + '/tasks/update/' + id);
-  }
+  } */
 }
