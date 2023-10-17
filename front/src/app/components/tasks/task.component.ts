@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TasksService } from '../../services/tasks.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-task',
@@ -11,7 +12,7 @@ export class TaskComponent implements OnInit{
   tasks: any[] = [];
   selectedTask: any;
 
-  constructor(public tasksService: TasksService) { }
+  constructor(public tasksService: TasksService, public authService: AuthService) { }
 
   ngOnInit() {
     this.tasksService.getTasks()
@@ -52,6 +53,16 @@ export class TaskComponent implements OnInit{
           err => console.log(err)
         );
     }
+  }
+
+  getRole(){
+    const data = this.authService.getDataUser();
+    return data.role;
+  }
+
+  getVisibleTasks() {
+    let role = this.getRole();
+    return this.tasks.filter(task => role === 'Admin' || role === task.department);
   }
   
 }

@@ -4,7 +4,7 @@
         <img src="../../../assets/img/sin-tareas.jpg" alt="Sin tareas para mostrar">
     </div>
 
-    <div class="col-md-4" *ngFor="let task of tasks; let i = index">
+    <div class="col-md-4" *ngFor="let task of getVisibleTasks(); let i = index">
         <div class="card" role="button" (click)="onCardClick(task)">
             <div class="card-body">
                 <h3>{{task.title}}</h3>
