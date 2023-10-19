@@ -12,6 +12,8 @@ export class SigninComponent {
 
   constructor(public authService: AuthService, private router:Router) { }
 
+  errorMessage = '';
+
   signInForm = new FormGroup({
     'name' : new FormControl('', Validators.required),
     'password' : new FormControl('', Validators.required)
@@ -22,7 +24,21 @@ export class SigninComponent {
     if (!data.name) data.name = '';
     if (!data.password) data.password = '';
     let newData = { name: data.name, password: data.password };
-    this.authService.signIn(newData);
+  
+    this.authService.signIn(newData)
+      .subscribe(
+        (res) => {
+          localStorage.setItem('token', res.token);
+          this.router.navigate(['/tasks']);
+        },
+        (err) => {
+          if (err.error && err.error.message) {
+            this.errorMessage = err.error.message;
+          } else {
+            this.errorMessage = 'Error desconocido al iniciar sesión.';
+          }
+        }
+      );
   }
 
 }

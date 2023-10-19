@@ -11,11 +11,11 @@ router.post('/users/signup', verifyToken, async (req, res) => {
     if (req.UserRol !== 'Admin') return res.status(401).json({ message: 'No tienes permiso para crear usuarios' });
     try {
         const { name, password, rol } = req.body;
+        if (await User.findOne({ name })) return res.status(404).json({ message: 'Este usuario ya está registrado' });
         const newUser = new User({ name, password, rol });
         await newUser.save();
-
         const token = jwt.sign({ _id: newUser._id, role: newUser.rol }, 'secretKey');
-        res.status(200).json({ token });
+        res.status(200).json({ message: 'Usuario registrado con exito' });
     } catch (error) {
         res.status(500).json({ message: 'Error al registrar usuario' });
     }
