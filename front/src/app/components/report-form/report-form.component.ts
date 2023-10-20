@@ -10,8 +10,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 export class ReportFormComponent{
 
   reportForm: FormGroup;
-
-  image: any;
+  images=[];
 
   constructor( private taskService:TasksService, private formBuilder: FormBuilder){
     this.reportForm = this.formBuilder.group({
@@ -24,15 +23,13 @@ export class ReportFormComponent{
     });
   }
 
-  selectedImage(event: any) {
+  selectedImages(event: any) {
     if (event.target.files.length > 0) {
-      const file = event.target.files[0];
-      this.image = file;
+      this.images = event.target.files;
     }
   }
   
   sendReport(){
-
     const formData = new FormData();
     formData.append('name', this.reportForm.get('name')?.value || '');
     formData.append('title', this.reportForm.get('title')?.value || '');
@@ -40,7 +37,9 @@ export class ReportFormComponent{
     formData.append('location', this.reportForm.get('location')?.value || '');
     formData.append('department', this.reportForm.get('department')?.value || '');
     formData.append('priority', this.reportForm.get('priority')?.value || '');
-    formData.append('image', this.image);
+    for (let img of this.images) {
+      formData.append('images', img);
+    }
 
     this.taskService.createTask(formData)
       .subscribe( res => {
