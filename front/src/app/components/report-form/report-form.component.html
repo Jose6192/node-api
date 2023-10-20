@@ -5,22 +5,22 @@
                 <h5 class="mb-0">Enviar un Reporte</h5>
             </div>
             <div class="card-body">
-                <form (submit)="sendReport()">
+                <form [formGroup]="reportForm" (submit)="sendReport()" enctype="multipart/form-data">
                     <div class="form-group mb-3">
                         <label for="name">Tu Nombre:</label>
-                        <input type="text" [(ngModel)]="task.name" name="name" id="name" class="form-control" required autofocus>
+                        <input type="text" formControlName="name" name="name" id="name" class="form-control" required autofocus>
                     </div>
                     <div class="form-group mb-3">
                         <label for="title">Título:</label>
-                        <input type="text" [(ngModel)]="task.title" name="title" id="title" class="form-control" required="">
+                        <input type="text" formControlName="title" name="title" id="title" class="form-control" required="">
                     </div>
                     <div class="form-group mb-3">
                         <label for="description">Descripción:</label>
-                        <input type="text" [(ngModel)]="task.description" name="description" id="description" class="form-control" required>
+                        <input type="text" formControlName="description" name="description" id="description" class="form-control" required>
                     </div>
                     <div class="form-group mb-3">
                         <label for="location">Localización:</label>
-                        <input list="locations" type="text" [(ngModel)]="task.location" name="location" id="location" class="form-control" required>
+                        <input list="locations" type="text" formControlName="location" name="location" id="location" class="form-control" required>
                         <datalist id="locations">
                             <option value="Edificio E"></option>
                             <option value="Edificio D"></option>
@@ -33,14 +33,14 @@
                     </div>                    
                     <div class="form-group mb-3">
                         <label for="department">Departamento:</label>
-                        <select [(ngModel)]="task.department" name="department" class="form-select" aria-label="Default select example" required>
+                        <select name="department" formControlName="department" class="form-select" aria-label="Default select example" required>
                             <option value="Sistemas">Sistemas</option>
                             <option value="Mantenimiento">Mantenimiento</option>
                         </select>
                     </div>
                     <div class="form-group mb-3">
                         <label for="priority">Prioridad:</label>
-                        <select [(ngModel)]="task.priority" name="priority" class="form-select" aria-label="Default select example" required>
+                        <select name="priority" formControlName="priority" class="form-select" aria-label="Default select example" required>
                             <option value="Baja">Baja</option>
                             <option value="Media">Media</option>
                             <option value="Alta">Alta</option>
@@ -48,7 +48,7 @@
                     </div>
                     <div class="form-group mb-3">
                         <label for="image">Imagen:</label>
-                        <input type="text" [(ngModel)]="task.image" name="image" id="image" class="form-control" required>
+                        <input type="file" accept="image/*" (change)="selectedImage($event)" name="image" id="image" class="form-control" required>
                     </div>
                     <button type="submit" class="btn btn-primary btn-block">
                         Enviar

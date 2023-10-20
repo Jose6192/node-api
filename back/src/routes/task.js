@@ -1,9 +1,8 @@
 const {Router} = require('express');
 const router = Router();
-
 const Task = require('../models/task')
-
 const jwt = require('jsonwebtoken');
+const multerConfig = require('../config/multer');
 
 router.get('/tasks/get', verifyToken, async (req, res) => {
     try {
@@ -29,10 +28,19 @@ router.get('/tasks/get/:taskId', verifyToken, async (req, res) => {
     }
 });
 
-router.post('/tasks/create', async (req, res) => {
+router.post('/tasks/create', multerConfig, async (req, res) => {
     try {
-        const {name, title, description, location, department, priority, image} = req.body;
-        const newTask = new Task({name, title, description, location, department, priority, image});
+        const { name, title, description, location, department, priority } = req.body;
+        const imagePaths = req.files.map(file => file.path);
+        const newTask = new Task({
+            name,
+            title,
+            description,
+            location,
+            department,
+            priority,
+            imagePaths
+        });
         await newTask.save();
         res.status(200).json({ message: 'Tarea registrada exitosamente' });
     } catch (error) {

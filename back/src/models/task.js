@@ -1,4 +1,4 @@
-const {Schema, model} = require('mongoose');
+const { Schema, model } = require('mongoose');
 
 const TaskSchema = new Schema({
     name: String,
@@ -7,9 +7,9 @@ const TaskSchema = new Schema({
     location: String,
     department: String,
     priority: String,
-    image: String
-},{
+    imagePaths: [String]
+}, {
     timestamps: true
-})
+});
 
 module.exports = model('task', TaskSchema);

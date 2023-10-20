@@ -16,7 +16,7 @@ export class TasksService {
   getTasksById(id:String){
     return this.http.get<any>(this.URL + '/tasks/get/' + id);
   }
-  createTask(task:{name:string}) {
+  createTask(task:FormData) {
     return this.http.post<any>(this.URL + '/tasks/create', task);
   }
   deleteTask(id:String){
