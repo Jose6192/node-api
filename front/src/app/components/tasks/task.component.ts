@@ -30,11 +30,10 @@ export class TaskComponent implements OnInit{
 
   deleteTask(i: number, task:any){
     let answer = confirm('¿Estas seguro de querer eliminarlo?');
+    if (!answer) return;
     this.tasksService.deleteTask(task._id)
       .subscribe();
-    if(answer){
-      this.tasks.splice(i,1) //elimina del arreglo la tarea para no tener que cargar la pagina
-    }
+    this.tasks.splice(i,1) //elimina del arreglo la tarea para no tener que cargar la pagina
   }
 
   transferTask(i: number, task: any) {

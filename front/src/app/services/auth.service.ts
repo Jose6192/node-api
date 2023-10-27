@@ -12,7 +12,7 @@ export class AuthService {
 
   private URL = 'http://localhost:3000';
 
-  signUp(user: { name: string; password: string; rol: String; }) {
+  signUp(user: { name: string; password: string; rol: string; }) {
     return this.http.post<any>(this.URL + '/users/signup', user);
   }
 

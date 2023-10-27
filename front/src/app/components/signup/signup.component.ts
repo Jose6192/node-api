@@ -1,25 +1,41 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
+import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css']
 })
-export class SignupComponent {
-
-  constructor(public authService: AuthService, private router:Router) { }
+export class SignupComponent implements OnInit{
 
   errorMessage = '';
   successMessage = '';
+  users: any = [];
+  updateUserForm!: FormGroup;
+  selectedUser: any;
+
+  constructor(public authService: AuthService, public userService:UserService, router:Router, private formBuilder: FormBuilder) {
+    this.updateUserForm = this.formBuilder.group({
+      name: ['', Validators.required],
+      password: ['', Validators.required],
+      rol: ['', Validators.required]
+    });
+  }
+
+  ngOnInit(){
+    this.userService.getUsers()
+      .subscribe( res => {this.users = res, console.log(this.users);})
+  }
 
   signUpForm = new FormGroup({
     'name' : new FormControl('', Validators.required),
     'password' : new FormControl('', Validators.required),
     'rol' : new FormControl('', Validators.required)
   });
+
 
   signUp() {
     let data = this.signUpForm.value;
@@ -33,6 +49,7 @@ export class SignupComponent {
         (res) => {
           this.successMessage = res.message;      
           this.signUpForm.reset();
+          this.users.push(newData);
         },
         (err) => {
           if (err.error && err.error.message) {
@@ -44,4 +61,47 @@ export class SignupComponent {
       )
   }
 
+  updateUser(){
+    const formData = new FormData();
+    formData.append('name', this.updateUserForm.get('name')?.value);
+    formData.append('password', this.updateUserForm.get('password')?.value);
+    formData.append('rol', this.updateUserForm.get('rol')?.value);
+    
+    const index = this.selectedUser;
+    const userId = this.users[index]._id;
+
+    this.userService.updateUser(userId ,formData)
+      .subscribe(
+        (res) => {
+          this.successMessage = res.message;
+          this.users[index].name = this.updateUserForm.get('name')?.value;
+          this.users[index].password = this.updateUserForm.get('password')?.value;
+          this.users[index].rol = this.updateUserForm.get('rol')?.value;  
+        },
+        (err) => {
+          if (err.error && err.error.message) {
+            this.errorMessage = err.error.message;
+          } else {
+            this.errorMessage = 'Error desconocido al actualizar usuario.';
+          }
+        }
+      )
+  }
+
+  deleteUser(index: any){
+    const userId = this.users[index]._id;
+    let answer = confirm('¿Estas seguro de eliminar este usuario?')
+    if (!answer) return;
+    this.userService.deleteUser(userId)
+      .subscribe
+  }
+/* ingresa los datos del usuario selecionado al formulario updateUserForm */
+  selectUser(index: any){
+    this.selectedUser = index;
+    this.updateUserForm.patchValue({
+      name: this.users[index].name,
+      password: this.users[index].password,
+      rol: this.users[index].rol
+    });
+  }
 }

@@ -1,12 +1,12 @@
 const {Router} = require('express');
 const router = Router();
-
+const multer = require('multer');
+const upload = multer();
 const User = require('../models/user');
-
 const jwt = require('jsonwebtoken');
 
 const bcrypt = require('bcryptjs')
-const saltRounds = 10;
+const saltRounds = 10; /* TODOS LOS USUARIOS TIENEN EL MISMO NUEMOR DE SALTOS!!! */
 
 router.get('/', (req, res) => res.send('hello :D'))
 
@@ -48,6 +48,16 @@ router.post('/users/signin', async (req, res ) => {
     }
 });
 
+router.get('/users/get', verifyToken, async (req, res) => {
+    try {
+        const user = await User.find();
+        res.status(200).json(user);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error al obtener el usuario' });
+    }
+});
+
 router.get('/users/get/:userId', verifyToken, async (req, res) => {
     try {
         const userId = req.params.userId;
@@ -59,6 +69,40 @@ router.get('/users/get/:userId', verifyToken, async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Error al obtener el usuario' });
+    }
+});
+
+router.delete('/users/delete/:userId', verifyToken, async (req, res) => {
+    try {
+        const userId = req.params.userId;
+        const deletedUser = await User.findByIdAndDelete(userId);
+        if (!deletedUser) {
+            return res.status(404).json({ message: 'Usuario no encontrado' });
+        }
+        res.status(200).json({ message: 'Usuario eliminado con éxito' });
+    }catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error al eliminar el usuario' });
+    }
+});
+
+router.patch('/users/update/:userId', verifyToken, upload.none(), async (req, res) => {
+    try {
+        const userId = req.params.userId;
+        const password = req.body.password;
+        bcrypt.hash(password, saltRounds, async (err, hash) => {
+            if (err) res.status(500).json({message: 'Error interno al guardar contraseña'});
+            else {
+                req.body.password = hash;
+                const updatedUser = await User.findByIdAndUpdate(userId, req.body, { new: true });
+                if (!updatedUser) {
+                    return res.status(404).json({ message: 'Usuario no encontrado' });
+                }
+                res.status(200).json({ message: 'Usuario actualizado con éxito'});
+            }
+        });
+    } catch (error) {
+        res.status(400).json({ message: 'Error al actualizar el Usuario' });
     }
 });
 
