@@ -1,0 +1,30 @@
+
+    <div class="container mt-5">
+        <h2>Historial de Tareas Completadas</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Título</th>
+                    <th scope="col">Descripción</th>
+                    <th scope="col">Ubicación</th>
+                    <th scope="col">Prioridad</th>
+                    <th scope="col">Imágenes</th>
+                    <th scope="col">Fecha de Completado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let task of completedTasks; let i = index">
+                    <th scope="row">{{i+1}}</th>
+                    <td>{{task.name}}</td>
+                    <td>{{task.title}}</td>
+                    <td>{{task.description}}</td>
+                    <td>{{task.location}}</td>
+                    <td>{{task.priority}}</td>
+                    <td>Imágenes</td>
+                    <td>{{task.completedTime | date: 'mediumDate'}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>

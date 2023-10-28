@@ -18,14 +18,27 @@ export class TaskComponent implements OnInit{
     this.tasksService.getTasks()
       .subscribe(
         res => {
-          this.tasks = res;
-        },
-        err => console.log(err)
-      );
+          let tasks: any[] = res;
+          this.tasks = tasks.filter((task: any) => task.status === 'pending');
+        }
+      )
   }
   
   onCardClick(task: any) { //alterna entre seleccionar y deseleccionar la misma tarjeta 
     this.selectedTask = this.selectedTask === task ? null : task;
+  }
+
+  completeTask(i: number, task: any) {
+    const updates = {
+      status: 'completed',
+      completedTime: new Date()
+    };
+    this.tasksService.compleateTask(task._id, updates)
+      .subscribe(
+        res => {
+          this.tasks.splice(i, 1);
+        }
+      );
   }
 
   deleteTask(i: number, task:any){

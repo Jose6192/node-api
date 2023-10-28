@@ -15,7 +15,7 @@
                     <p><b>Departamento:</b> {{task.department}}</p>
                     <p><b>Prioridad:</b> {{task.priority}}</p>
                     <p><b>Imagen:</b> {{task.image}}</p>
-                    <button class="btn btn-success" >Finalizar</button>
+                    <button class="btn btn-success" (click)="completeTask(i, task)" >Finalizar</button>
                     <button class="btn btn-primary" (click)="transferTask(i, task)">Transferir</button>
                     <button class="btn btn-danger" (click)="deleteTask(i, task)">Eliminar</button>
                 </div>

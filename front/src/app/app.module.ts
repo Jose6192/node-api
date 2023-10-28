@@ -13,6 +13,7 @@ import { SignupComponent } from './components/signup/signup.component';
 import { SigninComponent } from './components/signin/signin.component';
 import { TaskComponent } from './components/tasks/task.component';
 import { ReportFormComponent } from './components/report-form/report-form.component';
+import { TaskHistoryComponent } from './components/task-history/task-history.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { ReportFormComponent } from './components/report-form/report-form.compon
     SignupComponent,
     SigninComponent,
     TaskComponent,
-    ReportFormComponent
+    ReportFormComponent,
+    TaskHistoryComponent
   ],
   imports: [
     BrowserModule,

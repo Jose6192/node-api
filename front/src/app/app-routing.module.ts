@@ -6,6 +6,7 @@ import { SigninComponent } from './components/signin/signin.component';
 import { TaskComponent } from './components/tasks/task.component';
 import { ReportFormComponent } from './components/report-form/report-form.component'
 import { TechnicalFormComponent } from './components/technical-form/technical-form.component';
+import { TaskHistoryComponent } from './components/task-history/task-history.component';
 
 import { AuthGuard } from './auth.guard';
 
@@ -30,6 +31,10 @@ const routes: Routes = [{
 },{
   path: 'technical-form',
   component: TechnicalFormComponent,
+  canActivate: [AuthGuard]
+},{
+  path: 'task-history',
+  component: TaskHistoryComponent,
   canActivate: [AuthGuard]
 }];
 

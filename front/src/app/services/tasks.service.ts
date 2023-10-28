@@ -25,4 +25,7 @@ export class TasksService {
   transferTask(id: string, updates: { department: string }) {
     return this.http.patch<any>(this.URL + '/tasks/update/' + id, updates);
   }
+  compleateTask(id: string, updates: { status: string, completedTime: Date }) {
+    return this.http.patch<any>(this.URL + '/tasks/update/' + id, updates);
+  }
 }

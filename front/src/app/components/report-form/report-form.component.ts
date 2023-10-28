@@ -19,7 +19,7 @@ export class ReportFormComponent{
       'description': [''],
       'location': [''],
       'department': [''],
-      'priority': [''],
+      'priority': ['']
     });
   }
 
@@ -37,6 +37,8 @@ export class ReportFormComponent{
     formData.append('location', this.reportForm.get('location')?.value || '');
     formData.append('department', this.reportForm.get('department')?.value || '');
     formData.append('priority', this.reportForm.get('priority')?.value || '');
+    formData.append('status', 'pending');
+    formData.append('compleatedTime', '');
     for (let img of this.images) {
       formData.append('images', img);
     }

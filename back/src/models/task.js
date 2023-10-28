@@ -7,7 +7,9 @@ const TaskSchema = new Schema({
     location: String,
     department: String,
     priority: String,
-    imagePaths: [String]
+    imagePaths: [String],
+    status: String,
+    completedTime: Date,
 }, {
     timestamps: true
 });

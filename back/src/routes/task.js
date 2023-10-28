@@ -30,7 +30,7 @@ router.get('/tasks/get/:taskId', verifyToken, async (req, res) => {
 
 router.post('/tasks/create', multerConfig, async (req, res) => {
     try {
-        const { name, title, description, location, department, priority } = req.body;
+        const { name, title, description, location, department, priority, status, compleatedTime } = req.body;
         const imagePaths = req.files.map(file => file.path);
         const newTask = new Task({
             name,
@@ -39,6 +39,8 @@ router.post('/tasks/create', multerConfig, async (req, res) => {
             location,
             department,
             priority,
+            compleatedTime,
+            status,
             imagePaths
         });
         await newTask.save();
