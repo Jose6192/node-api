@@ -11,6 +11,9 @@ export class ReportFormComponent{
 
   reportForm: FormGroup;
   images=[];
+  /* Mensajes para el usuario en el formulario */
+  succesMessage: string = '';
+  errorMessage: string = '';
 
   constructor( private taskService:TasksService, private formBuilder: FormBuilder){
     this.reportForm = this.formBuilder.group({
@@ -45,8 +48,8 @@ export class ReportFormComponent{
 
     this.taskService.createTask(formData)
       .subscribe( res => {
-        console.log(res);
-      }, err => console.log(err));
+        this.succesMessage = (res.message);
+      }, err => this.errorMessage = 'Error al enviar reporte');
 
   }
 }
