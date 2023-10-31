@@ -7,8 +7,9 @@ const PORT = 3000;
 require('./database.js');
 
 app.use(cors());
-app.use(express.json());
+app.use(express.static('public')); // Para que se pueda acceder a la carpeta public desde el navegador
 
+app.use('/', require ('./routes/images.js'));
 app.use('/', require('./routes/user.js'));
 app.use('/', require('./routes/task.js'));
 

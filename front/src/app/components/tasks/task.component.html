@@ -3,7 +3,6 @@
         <h3>No hay tareas para mostrar</h3>
         <img src="../../../assets/img/sin-tareas.jpg" alt="Sin tareas para mostrar">
     </div>
-
     <div class="col-md-4" *ngFor="let task of getVisibleTasks(); let i = index">
         <div class="card" role="button" (click)="onCardClick(task)">
             <div class="card-body">
@@ -14,7 +13,10 @@
                     <p><b>Localizacion:</b> {{task.location}}</p>
                     <p><b>Departamento:</b> {{task.department}}</p>
                     <p><b>Prioridad:</b> {{task.priority}}</p>
-                    <p><b>Imagen:</b> {{task.image}}</p>
+                    <p><b>path:</b> {{task.imagePaths}}</p>
+                    <div *ngFor= "let image of task.imagePaths">
+                        <p><b>Imagen: </b><a href="{{image}}" target="_blank">ver imagen</a></p>
+                    </div>
                     <button class="btn btn-success" (click)="completeTask(i, task)" >Finalizar</button>
                     <button class="btn btn-primary" (click)="transferTask(i, task)">Transferir</button>
                     <button class="btn btn-danger" (click)="deleteTask(i, task)">Eliminar</button>
