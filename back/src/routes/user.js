@@ -44,7 +44,8 @@ router.post('/users/signin', async (req, res ) => {
             else return res.status(401).json({ message: '¡Oops! Parece que olvidaste tu contraseña' });       
         })
     } catch (error) {
-        res.status(500).json({ message: 'Error interno al iniciar sesion' });
+        console.error(error);
+        res.status(500).json({ message: 'Error interno al iniciar sesión' });
     }
 });
 

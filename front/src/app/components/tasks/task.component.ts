@@ -11,6 +11,7 @@ export class TaskComponent implements OnInit{
 
   tasks: any[] = [];
   selectedTask: any;
+  imageURL = 'http://localhost:3000/imagen/'
 
   constructor(public tasksService: TasksService, public authService: AuthService) { }
 

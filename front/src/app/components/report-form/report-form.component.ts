@@ -29,6 +29,7 @@ export class ReportFormComponent{
   selectedImages(event: any) {
     if (event.target.files.length > 0) {
       this.images = event.target.files;
+      console.log(this.images);
     }
   }
   

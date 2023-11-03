@@ -13,9 +13,8 @@
                     <p><b>Localizacion:</b> {{task.location}}</p>
                     <p><b>Departamento:</b> {{task.department}}</p>
                     <p><b>Prioridad:</b> {{task.priority}}</p>
-                    <p><b>path:</b> {{task.imagePaths}}</p>
-                    <div *ngFor= "let image of task.imagePaths">
-                        <p><b>Imagen: </b><a href="{{image}}" target="_blank">ver imagen</a></p>
+                    <div *ngFor= "let image of task.imagePaths; let i = index">
+                        <p><b>({{i+1}}) Imagen: </b><a href="{{imageURL + image}}" target="_blank" >abrir</a></p>
                     </div>
                     <button class="btn btn-success" (click)="completeTask(i, task)" >Finalizar</button>
                     <button class="btn btn-primary" (click)="transferTask(i, task)">Transferir</button>

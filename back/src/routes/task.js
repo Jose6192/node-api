@@ -3,6 +3,7 @@ const router = Router();
 const Task = require('../models/task')
 const jwt = require('jsonwebtoken');
 const multerConfig = require('../config/multer');
+const path = require('path');
 
 router.get('/tasks/get', verifyToken, async (req, res) => {
     try {
@@ -31,7 +32,7 @@ router.get('/tasks/get/:taskId', verifyToken, async (req, res) => {
 router.post('/tasks/create', multerConfig, async (req, res) => {
     try {
         const { name, title, description, location, department, priority, status, compleatedTime } = req.body;
-        const imagePaths = req.files.map(file => file.path);
+        const imagePaths = req.files.map(file => path.basename(file.path));
         const newTask = new Task({
             name,
             title,
