@@ -7,3 +7,12 @@
 .high-priority-footer {
     background-color: #EF5350;
 }
+
+.card{
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.card:hover{
+    transform: scale(1.05);
+}

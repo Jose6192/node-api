@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row row-cols-1 row-cols-md-2 g-4">
     <div *ngIf="tasks.length === 0" class="col-md-4">
         <h3>No hay tareas para mostrar</h3>
         <img src="../../../assets/img/sin-tareas.jpg" alt="Sin tareas para mostrar">
@@ -14,7 +14,7 @@
                     <p><b>Departamento:</b> {{task.department}}</p>
                     <p><b>Prioridad:</b> {{task.priority}}</p>
                     <div *ngFor= "let image of task.imagePaths; let i = index">
-                        <p><b>({{i+1}}) Imagen: </b><a href="{{imageURL + image}}" target="_blank" >abrir</a></p>
+                        <p><b>({{i+1}}) Imagen: </b><a href="{{imageURL + image}}" target="_blank" >abrir</a></p>                        
                     </div>
                     <button class="btn btn-success" (click)="completeTask(i, task)" >Finalizar</button>
                     <button class="btn btn-primary" (click)="transferTask(i, task)">Transferir</button>

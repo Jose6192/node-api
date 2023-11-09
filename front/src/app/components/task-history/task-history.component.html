@@ -16,7 +16,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let task of completedTasks; let i = index">
+                <tr *ngFor="let task of completedTasks.slice(-6); let i = index">
                     <th scope="row">{{i+1}}</th>
                     <td>{{task.name}}</td>
                     <td>{{task.title}}</td>
@@ -24,9 +24,20 @@
                     <td>{{task.location}}</td>
                     <td>{{task.department}}</td>
                     <td>{{task.priority}}</td>
-                    <td>Imágenes</td>
+                    <td>
+                        <div class="dropdown">
+                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              ver imagenes
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li *ngFor= "let image of task.imagePaths; let i = index"><a class="dropdown-item" href="{{imageURL + image}}" target="_blank" ><b>({{i+1}})</b>abrir</a></li>
+                            </ul>
+                        </div>
+                    </td>
                     <td>{{task.completedTime | date: 'mediumDate'}}</td>
                 </tr>
             </tbody>
         </table>
     </div>
+
+    

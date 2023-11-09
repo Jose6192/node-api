@@ -8,7 +8,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs')
 const saltRounds = 10; /* TODOS LOS USUARIOS TIENEN EL MISMO NUEMOR DE SALTOS!!! */
 
-router.get('/', (req, res) => res.send('hello :D'))
+router.get('/', (req, res) => res.send('hola soy una api privada xd'))
 
 router.post('/users/signup', verifyToken, async (req, res) => {
     if (req.UserRol !== 'Admin') return res.status(401).json({ message: 'No tienes permiso para crear usuarios' });

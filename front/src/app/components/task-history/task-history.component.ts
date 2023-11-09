@@ -9,6 +9,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class TaskHistoryComponent implements OnInit {
 
+  imageURL = 'http://localhost:3000/imagen/'
   completedTasks: any[] = [];
 
   constructor(private tasksService: TasksService, private authService: AuthService) { }
