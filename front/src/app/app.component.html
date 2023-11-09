@@ -1,61 +1,42 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container">
-    <a routerLink="/tasks"><img src="../assets/img/logo-universidad.png" height="24" alt="logo UTRM"></a>
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" routerLink="/tasks">
+      <img src="../assets/img/logo-universidad.png" height="24" alt="logo UTRM">
+    </a>
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-      <ul class="navbar-nav">
+      <div class="navbar-nav">
         <ng-container *ngIf="!authService.loggedIn(); else loggedIn">
           <!-- public links -->
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/report-form" routerLinkActive="active">Hacer un reporte</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/signin" routerLinkActive="active">Iniciar sesión</a>
-          </li>
+          <a class="nav-link" routerLink="/report-form" routerLinkActive="active">Hacer un reporte</a>
+          <a class="nav-link" routerLink="/signin" routerLinkActive="active">Iniciar sesión</a>
         </ng-container>
         <!-- logged links -->
         <ng-template #loggedIn>
-          <li class="nav-item">
+            <a class="nav-link" routerLink="/tasks" routerLinkActive="active">Tareas</a>
             <a class="nav-link" routerLink="/report-form" routerLinkActive="active">Hacer un reporte</a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link" routerLink="/task-history" routerLinkActive="active">Historial de reportes</a>
-          </li>
             <ng-container *ngIf="getRole() === 'Admin'">
               <!-- only Admin -->
-              <li class="nav-item">
-                <a class="nav-link" routerLink="/signup" routerLinkActive="active">Administrar usuarios</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" routerLink="/technical-form" routerLinkActive="active">Generar ficha tecnica</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" role="button" (click)="authService.logOut()">Cerrar sesión</a>
-              </li>
+            <a class="nav-link" routerLink="/signup" routerLinkActive="active">Administrar usuarios</a>
+            <a class="nav-link" routerLink="/technical-form" routerLinkActive="active">Generar ficha tecnica</a>
+            <a class="nav-link" role="button" (click)="authService.logOut()">Cerrar sesión</a>
             </ng-container>
-
             <ng-container *ngIf="getRole() === 'Sistemas'">
               <!-- only Tecnico -->
-              <li class="nav-item">
-                <a class="nav-link" routerLink="/technical-form" routerLinkActive="active">Generar ficha tecnica</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" role="button" (click)="authService.logOut()">Cerrar sesión</a>
-              </li>
+            <a class="nav-link" routerLink="/technical-form" routerLinkActive="active">Generar ficha tecnica</a>
+            <a class="nav-link" role="button" (click)="authService.logOut()">Cerrar sesión</a>
             </ng-container>
-
             <ng-container *ngIf="getRole() === 'Mantenimiento'">
-              <!-- only Mantenimiento add <li> -->
-              <li class="nav-item">
-                <a class="nav-link" role="button" (click)="authService.logOut()">Cerrar sesión</a>
-              </li> 
+              <!-- only Mantenimiento -->
+            <a class="nav-link" role="button" (click)="authService.logOut()">Cerrar sesión</a>
             </ng-container>
         </ng-template>
-      </ul>
+      </div>
     </div>
   </div>
 </nav>

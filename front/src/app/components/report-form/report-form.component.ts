@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { TasksService } from '../../services/tasks.service'
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators  } from '@angular/forms';
 
 @Component({
   selector: 'app-report-form',
@@ -17,12 +17,12 @@ export class ReportFormComponent{
 
   constructor( private taskService:TasksService, private formBuilder: FormBuilder){
     this.reportForm = this.formBuilder.group({
-      'name': [''],
-      'title': [''],
-      'description': [''],
-      'location': [''],
-      'department': [''],
-      'priority': ['']
+      'name': ['', Validators.required],
+      'title': ['', Validators.required],
+      'description': ['', Validators.required],
+      'location': ['', Validators.required],
+      'department': ['', Validators.required],
+      'priority': ['', Validators.required]
     });
   }
 
