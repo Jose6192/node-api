@@ -1,7 +1,7 @@
 <div class="row row-cols-1 row-cols-md-2 g-4">
     <div *ngIf="tasks.length === 0" class="col-md-4">
-        <h3>No hay tareas para mostrar</h3>
-        <img src="../../../assets/img/sin-tareas.jpg" alt="Sin tareas para mostrar">
+        <h3>No hay reportes para mostrar</h3>
+        <img src="../../../assets/img/sin-tareas.jpg" height="" width="80%" alt="Sin tareas para mostrar">
     </div>
     <div class="col-md-4" *ngFor="let task of getVisibleTasks(); let i = index">
         <div class="card" role="button" (click)="onCardClick(task)">
@@ -16,13 +16,39 @@
                     <div *ngFor= "let image of task.imagePaths; let i = index">
                         <p><b>({{i+1}}) Imagen: </b><a href="{{imageURL + image}}" target="_blank" >abrir</a></p>                        
                     </div>
-                    <button class="btn btn-success" (click)="completeTask(i, task)" >Finalizar</button>
+                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#completeReport">Finalizar</button>
                     <button class="btn btn-primary" (click)="transferTask(i, task)">Transferir</button>
                     <button class="btn btn-danger" (click)="deleteTask(i, task)">Eliminar</button>
                 </div>
             </div>
             <div class="card-footer justify-content-between low-priority-footer" [ngClass]="{'low-priority-footer': task.priority === 'Baja', 'medium-priority-footer': task.priority === 'Media', 'high-priority-footer': task.priority=== 'Alta'}">
                 {{task.createdAt | date: 'mediumDate'}}
+            </div>
+        </div>
+        <!-- Modal finalizar reporte -->
+        <div class="modal fade" id="completeReport" tabindex="-1" aria-labelledby="completeReportModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Informe de servicio</h1>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                        <label for="message-text" class="col-form-label">Descripción del servicio:</label>
+                        <textarea class="form-control" id="message-text"></textarea>
+                        </div>
+                        <div class="mb-3">
+                        <label for="message-text" class="col-form-label">Evidencia:</label>
+                        <input type="file" class="form-control" id="message-text">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">cancelar</button>
+                <button type="button" class="btn btn-primary" (click)="completeTask(i, task)" >Finalizar</button>
+                </div>
+            </div>
             </div>
         </div>
     </div>
