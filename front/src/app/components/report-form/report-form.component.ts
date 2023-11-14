@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { TasksService } from '../../services/tasks.service'
-import { FormBuilder, FormGroup, Validators  } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormsModule  } from '@angular/forms';
 
 @Component({
   selector: 'app-report-form',
@@ -14,6 +14,11 @@ export class ReportFormComponent{
   /* Mensajes para el usuario en el formulario */
   succesMessage: string = '';
   errorMessage: string = '';
+
+  /* variablesForm */
+  selectedDepartment: string | undefined;
+  problem: string | undefined;
+  building: string | undefined;
 
   constructor( private taskService:TasksService, private formBuilder: FormBuilder){
     this.reportForm = this.formBuilder.group({

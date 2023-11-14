@@ -1,4 +1,143 @@
+
 <div class="row">
+    <div class="col-md-4 mx-auto">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Reporte de fallo</h5>
+            </div>
+            <div class="card-body">
+                <form>
+                    <div class="form-group mb-3">
+                        <label for="">Nombre completo:</label>
+                        <input type="text" class="form-control">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="">Correo electronico:</label>
+                        <input type="email" class="form-control">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="Department" >Falla en el area de:</label>
+                        <select [(ngModel)]="selectedDepartment" class="form-select" name="Department">
+                            <option value="Sistemas">Sistemas</option>
+                            <option value="Mantenimiento">Mantenimiento</option>
+                        </select>
+                    </div>
+                    <div class="form-group mb-3" *ngIf="selectedDepartment === 'Sistemas'">
+                        <label for="">Tipo de fallo:</label>
+                        <select class="form-select" [(ngModel)]="problem" name="Sproblem">
+                            <option>Computo</option>
+                            <option>Impresora</option>
+                            <option>Internet</option>
+                            <option>Proyector</option>
+                            <option>Software</option>
+                            <option>Telefono</option>
+                            <option>Otro</option>
+                        </select>
+                    </div>
+                    <div class="form-group mb-3" *ngIf="selectedDepartment === 'Mantenimiento'">
+                        <label for="">Tipo de fallo:</label>
+                        <select class="form-select" [(ngModel)]="problem" name="Mproblem">
+                            <option>Aire acondicionado</option>
+                            <option>Contacto electrico</option>
+                            <option>Fuga de agua</option>
+                            <option>Iluminacion</option>
+                            <option>Plafones</option>
+                            <option>Puertas</option>
+                            <option>Ventanas</option>
+                            <option>Otro</option>
+                        </select>
+                    </div>
+                    <div class="form-group mb-3" *ngIf="problem === 'Otro'">
+                        <label for="">Indique el tipo de fallo:</label>
+                        <input type="text" class="form-control" >
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="">Edificio:</label>
+                        <select class="form-select" [(ngModel)]="building" name="building">
+                            <option>Cafeteria</option>
+                            <option>Domo deportivo</option>
+                            <option>Edificio C</option>
+                            <option>Edificio D</option>
+                            <option>Edificio E</option>
+                            <option>Edificio F</option>
+                            <option>Edificio L</option>
+                        </select>
+                    </div>
+                    <div [ngSwitch]="building">
+                        <div class="form-group mb-3" *ngSwitchCase="'Edificio C'">
+                            <label for="">Espacio afectado:</label>
+                            <select class="form-select">
+                                <option>Rectoria</option>
+                                <option>Direccion de planeacion</option>
+                                <option>Abogado general</option>
+                                <option>Biblioteca</option>
+                                <option>Direccion de administracion</option>
+                                <option>Servicios escolares</option>
+                                <option>Recursos humanos</option>
+                                <option>Recursos Materiales</option>
+                                <option>Contabilidad</option>
+                            </select>
+                        </div>
+                        <div class="form-group mb-3" *ngSwitchCase="'Edificio D'">
+                            <label for="">Espacio afectado:</label>
+                            <select class="form-select">
+                                <option>Subdireccion de Gastronomia</option>
+                                <option>Subdireccion de Admon, Mtto Y tic</option>
+                                <option>DC01</option>
+                                <option>DC02</option>
+                                <option>DC03</option>
+                                <option>DC04</option>
+                                <option>DC05</option>
+                                <option>DC06</option>
+                                <option>DC07</option>
+                                <option>DC08</option>
+                                <option>DC09</option>
+                                <option>DC10</option>
+                                <option>DC11</option>
+                                <option>DC12</option>
+                                <option>Area de maestros</option>
+                                <option>Laboratorio de computo 2</option>
+                                <option>D201</option>
+                                <option>D202</option>
+                                <option>D203</option>
+                                <option>D204</option>
+                                <option>D205</option>
+                                <option>D206</option>
+                                <option>D207</option>
+                                <option>D208</option>
+                                <option>D209</option>
+                                <option>D210</option>
+                                <option>D211</option>
+                                <option>D212</option>
+                                <option>Direccion de vinculacion</option>
+                                <option>Prensa y difucion</option>
+                                <option>Cultura y deporte</option>
+                                <option>Practicas y estadias</option>
+                                <option>Seguimineto a egresados</option>
+                                <option>Salon audiovisual</option>
+                                <option>Laboratorio de computo CAUD</option>
+                                <option>Laboratorio de computo "1"</option>
+                                <option>D101</option>
+                                <option>D102</option>
+                                <option>D103</option>
+                                <option>D104</option>
+                                <option>D105</option>
+                                <option>D106</option>
+                                <option>D107</option>
+                                <option>D108</option>
+                                <option>D109</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary">Enviar</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- <div class="row">
     <div class="col-md-4 mx-auto">
         <div class="card">
             <div class="card-header">
@@ -65,4 +204,4 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
