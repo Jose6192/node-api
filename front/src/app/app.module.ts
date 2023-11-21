@@ -15,6 +15,8 @@ import { TaskComponent } from './components/tasks/task.component';
 import { ReportFormComponent } from './components/report-form/report-form.component';
 import { TaskHistoryComponent } from './components/task-history/task-history.component';
 
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,6 +32,7 @@ import { TaskHistoryComponent } from './components/task-history/task-history.com
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    SweetAlert2Module.forRoot(),
     JwtModule.forRoot({
       config: {
         tokenGetter: function  tokenGetter() {

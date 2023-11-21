@@ -29,20 +29,17 @@ router.get('/tasks/get/:taskId', verifyToken, async (req, res) => {
     }
 });
 
-router.post('/tasks/create', multerConfig, async (req, res) => {
+router.post('/tasks/create', async (req, res) => {
     try {
-        const { name, title, description, location, department, priority, status, compleatedTime } = req.body;
-        const imagePaths = req.files.map(file => path.basename(file.path));
+        const { name, email, department, failType, anotherFailType, building, place } = req.body;
         const newTask = new Task({
             name,
-            title,
-            description,
-            location,
+            email,
             department,
-            priority,
-            compleatedTime,
-            status,
-            imagePaths
+            failType,
+            anotherFailType,
+            building,
+            place
         });
         await newTask.save();
         res.status(200).json({ message: 'Tarea registrada exitosamente' });

@@ -1,4 +1,3 @@
-
 <div class="row">
     <div class="col-md-4 mx-auto">
         <div class="card">
@@ -6,25 +5,25 @@
                 <h5 class="mb-0">Reporte de fallo</h5>
             </div>
             <div class="card-body">
-                <form>
+                <form (ngSubmit)="onSubmit()" #form="ngForm">
                     <div class="form-group mb-3">
-                        <label for="">Nombre completo:</label>
-                        <input type="text" class="form-control">
+                        <label>Nombre completo:</label>
+                        <input type="text" class="form-control" name="name" [(ngModel)]="reportForm.name" required #name="ngModel">
                     </div>
                     <div class="form-group mb-3">
-                        <label for="">Correo electronico:</label>
-                        <input type="email" class="form-control">
+                        <label>Correo electronico:</label>
+                        <input type="email" class="form-control" name="email" [(ngModel)]="reportForm.email" required #email="ngModel">
                     </div>
                     <div class="form-group mb-3">
-                        <label for="Department" >Falla en el area de:</label>
-                        <select [(ngModel)]="selectedDepartment" class="form-select" name="Department">
+                        <label>Falla en el area de:</label>
+                        <select class="form-select" name="department" [(ngModel)]="reportForm.department" required #department="ngModel">
                             <option value="Sistemas">Sistemas</option>
                             <option value="Mantenimiento">Mantenimiento</option>
                         </select>
                     </div>
-                    <div class="form-group mb-3" *ngIf="selectedDepartment === 'Sistemas'">
-                        <label for="">Tipo de fallo:</label>
-                        <select class="form-select" [(ngModel)]="problem" name="Sproblem">
+                    <div class="form-group mb-3" *ngIf="reportForm.department === 'Sistemas'">
+                        <label>Tipo de fallo:</label>
+                        <select class="form-select" name="failType" [(ngModel)]="reportForm.failType" required>
                             <option>Computo</option>
                             <option>Impresora</option>
                             <option>Internet</option>
@@ -34,9 +33,9 @@
                             <option>Otro</option>
                         </select>
                     </div>
-                    <div class="form-group mb-3" *ngIf="selectedDepartment === 'Mantenimiento'">
-                        <label for="">Tipo de fallo:</label>
-                        <select class="form-select" [(ngModel)]="problem" name="Mproblem">
+                    <div class="form-group mb-3" *ngIf="reportForm.department === 'Mantenimiento'">
+                        <label>Tipo de fallo:</label>
+                        <select class="form-select" name="failType" [(ngModel)]="reportForm.failType" required>
                             <option>Aire acondicionado</option>
                             <option>Contacto electrico</option>
                             <option>Fuga de agua</option>
@@ -47,13 +46,13 @@
                             <option>Otro</option>
                         </select>
                     </div>
-                    <div class="form-group mb-3" *ngIf="problem === 'Otro'">
-                        <label for="">Indique el tipo de fallo:</label>
-                        <input type="text" class="form-control" >
+                    <div class="form-group mb-3" *ngIf="reportForm.failType === 'Otro'">
+                        <label>Indique el tipo de fallo:</label>
+                        <input type="text" class="form-control" name="failType" [(ngModel)]="reportForm.anotherFailType" required>
                     </div>
                     <div class="form-group mb-3">
-                        <label for="">Edificio:</label>
-                        <select class="form-select" [(ngModel)]="building" name="building">
+                        <label>Edificio:</label>
+                        <select class="form-select" name="building" (change)="cleanPlace()" [(ngModel)]="reportForm.building" required>
                             <option>Cafeteria</option>
                             <option>Domo deportivo</option>
                             <option>Edificio C</option>
@@ -63,10 +62,10 @@
                             <option>Edificio L</option>
                         </select>
                     </div>
-                    <div [ngSwitch]="building">
+                    <div [ngSwitch]="reportForm.building">
                         <div class="form-group mb-3" *ngSwitchCase="'Edificio C'">
-                            <label for="">Espacio afectado:</label>
-                            <select class="form-select">
+                            <label>Espacio afectado:</label>
+                            <select class="form-select" name="place" [(ngModel)]="reportForm.place" required>
                                 <option>Rectoria</option>
                                 <option>Direccion de planeacion</option>
                                 <option>Abogado general</option>
@@ -79,8 +78,8 @@
                             </select>
                         </div>
                         <div class="form-group mb-3" *ngSwitchCase="'Edificio D'">
-                            <label for="">Espacio afectado:</label>
-                            <select class="form-select">
+                            <label>Espacio afectado:</label>
+                            <select class="form-select" name="place" [(ngModel)]="reportForm.place" required>
                                 <option>Subdireccion de Gastronomia</option>
                                 <option>Subdireccion de Admon, Mtto Y tic</option>
                                 <option>DC01</option>
@@ -129,79 +128,9 @@
                             </select>
                         </div>
                     </div>
-                    <button class="btn btn-primary">Enviar</button>
+                    <button class="btn btn-primary" [disabled]="form.invalid">Enviar</button>
                 </form>
             </div>
-
         </div>
     </div>
 </div>
-
-<!-- <div class="row">
-    <div class="col-md-4 mx-auto">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="mb-0">Enviar un Reporte</h5>
-            </div>
-            <div class="card-body">
-                <form [formGroup]="reportForm" (submit)="sendReport()" enctype="multipart/form-data">
-                    <div class="form-group mb-3">
-                        <label for="name">Tu Nombre:</label>
-                        <input type="text" formControlName="name" name="name" id="name" class="form-control" required autofocus>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label for="title">Título:</label>
-                        <input type="text" formControlName="title" name="title" id="title" class="form-control" required="">
-                    </div>
-                    <div class="form-group mb-3">
-                        <label for="description">Descripción:</label>
-                        <input type="text" formControlName="description" name="description" id="description" class="form-control" required>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label for="location">Localización:</label>
-                        <input list="locations" type="text" formControlName="location" name="location" id="location" class="form-control" required>
-                        <datalist id="locations">
-                            <option value="Edificio E"></option>
-                            <option value="Edificio D"></option>
-                            <option value="Edificio F"></option>
-                            <option value="Edificio L"></option>
-                            <option value="Edificio C"></option>                            
-                            <option value="Edificio N"></option>
-                            <option value="Cancha deportiva"></option>
-                        </datalist>
-                    </div>                    
-                    <div class="form-group mb-3">
-                        <label for="department">Departamento:</label>
-                        <select name="department" formControlName="department" class="form-select" aria-label="Default select example" required>
-                            <option value="Sistemas">Sistemas</option>
-                            <option value="Mantenimiento">Mantenimiento</option>
-                        </select>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label for="priority">Prioridad:</label>
-                        <select name="priority" formControlName="priority" class="form-select" aria-label="Default select example" required>
-                            <option value="Baja">Baja</option>
-                            <option value="Media">Media</option>
-                            <option value="Alta">Alta</option>
-                        </select>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label for="image">Imagen:</label>
-                        <input type="file" accept="image/*" (change)="selectedImages($event)" name="images" class="form-control" multiple required>
-                    </div>
-                    <div class="alert alert-success mb-4" *ngIf="succesMessage">
-                        {{succesMessage}}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                    <div class="alert alert-danger mb-4" *ngIf="errorMessage">
-                        {{errorMessage}}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div> 
-                    <button type="submit" class="btn btn-primary btn-block" [disabled]="reportForm.invalid">
-                        Enviar
-                    </button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div> -->
