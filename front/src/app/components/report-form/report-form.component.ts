@@ -38,9 +38,9 @@ export class ReportFormComponent{
   }
 
   onSubmit():void{
-    /* this.taskService.createTask(this.reportForm)
-      .subscribe((message : any) => {
-        alert(message.message);
+    this.taskService.createTask(this.reportForm)
+      .subscribe(res => {
+        alert(res.message);
         this.reportForm = {
           name: '',
           email: '',
@@ -50,9 +50,9 @@ export class ReportFormComponent{
           building: '',
           place: ''
         }
-      }); */
+      }, err => alert('Error: '+ err.status +' '+ err.error.message));
 
-      Swal.fire({
+      /* Swal.fire({
         title: 'Tu reporte ha sido enviado',
         icon: 'success',
         confirmButtonText: 'ok',
@@ -66,7 +66,7 @@ export class ReportFormComponent{
           building: '',
           place: ''
         }
-      })      
+      })  */     
       
   };
 }

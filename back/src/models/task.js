@@ -2,14 +2,17 @@ const { Schema, model } = require('mongoose');
 
 const TaskSchema = new Schema({
     name: String,
-    title: String,
-    description: String,
-    location: String,
+    email: String,
     department: String,
-    priority: String,
+    failType: String,
+    anotherFailType: String,
+    building: String,
+    place: String,
+    folio: String,
     imagePaths: [String],
+    priority: String,
     status: String,
-    completedTime: Date,
+    completedTime: Date
 }, {
     timestamps: true
 });
