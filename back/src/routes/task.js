@@ -31,7 +31,7 @@ router.get('/tasks/get/:taskId', verifyToken, async (req, res) => {
 
 router.post('/tasks/create', async (req, res) => {
     try {
-        throw new Error('Este es un error de prueba');
+        //throw new Error('Este es un error de prueba');
         const { name, email, department, failType, anotherFailType, building, place } = req.body;
         const folio = Math.floor(Math.random() * 1000000000);
         const priority = '';

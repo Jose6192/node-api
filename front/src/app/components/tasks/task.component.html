@@ -6,14 +6,15 @@
     <div class="col-md-4" *ngFor="let task of getVisibleTasks(); let i = index">
         <div class="card" role="button" (click)="onCardClick(task)">
             <div class="card-body">
-                <h3>{{task.failType}}</h3>
+                <h3>{{task.failType}}</h3>   
                 <p>{{task.building}}</p>
                 <div *ngIf="task === selectedTask">
+                    <div *ngIf="task.anotherFailType !== ''">
+                    <p><b>tipo de falla:</b> {{task.anotherFailType}}</p>
+                    </div>
                     <p><b>Reportado por:</b> {{task.name}}</p>
-                    <p><b>Localizacion:</b> {{task.email}}</p>
-                    <p><b>Departamento:</b> {{task.department}}</p>
-                    <p><b>Prioridad:</b> {{task.place}}</p>
-                    <div *ngFor= "let image of task.imagePaths; let i = index">
+                    <p><b>email:</b> {{task.email}}</p>
+                    <div *ngFor="let image of task.imagePaths; let i = index">
                         <p><b>({{i+1}}) Imagen: </b><a href="{{imageURL + image}}" target="_blank" >abrir</a></p>                        
                     </div>
                     <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#completeReport">Finalizar</button>
