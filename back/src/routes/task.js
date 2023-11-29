@@ -31,9 +31,10 @@ router.get('/tasks/get/:taskId', verifyToken, async (req, res) => {
 
 router.post('/tasks/create', async (req, res) => {
     try {
-        //throw new Error('Este es un error de prueba');
+        
         const { name, email, department, failType, anotherFailType, building, place } = req.body;
-        const folio = Math.floor(Math.random() * 1000000000);
+        const finalizedAt = null;
+        const folio = ''
         const priority = '';
         const status = 'pending';
         const newTask = new Task({
@@ -46,7 +47,8 @@ router.post('/tasks/create', async (req, res) => {
             priority,
             place,
             folio,
-            status
+            status,
+            finalizedAt
         });
         await newTask.save();
         res.status(200).json({ message: 'Tarea registrada exitosamente' });

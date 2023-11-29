@@ -14,6 +14,7 @@
                     </div>
                     <p><b>Reportado por:</b> {{task.name}}</p>
                     <p><b>email:</b> {{task.email}}</p>
+                    <p><b>departamento:</b> {{task.department}}</p>
                     <div *ngFor="let image of task.imagePaths; let i = index">
                         <p><b>({{i+1}}) Imagen: </b><a href="{{imageURL + image}}" target="_blank" >abrir</a></p>                        
                     </div>

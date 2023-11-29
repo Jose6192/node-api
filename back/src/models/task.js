@@ -12,7 +12,7 @@ const TaskSchema = new Schema({
     imagePaths: [String],
     priority: String,
     status: String,
-    completedTime: Date
+    finalizedAt: Date
 }, {
     timestamps: true
 });
