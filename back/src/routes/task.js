@@ -31,9 +31,10 @@ router.get('/tasks/get/:taskId', verifyToken, async (req, res) => {
 
 router.post('/tasks/create', async (req, res) => {
     try {
-        
         const { name, email, department, failType, anotherFailType, building, place } = req.body;
         const finalizedAt = null;
+        const createdAt = new Date();
+        createdAt.setHours(createdAt.getHours() - 5) //establece horario sureste de mexico
         const folio = ''
         const priority = '';
         const status = 'pending';
@@ -48,10 +49,11 @@ router.post('/tasks/create', async (req, res) => {
             place,
             folio,
             status,
+            createdAt,
             finalizedAt
         });
         await newTask.save();
-        res.status(200).json({ message: 'Tarea registrada exitosamente' });
+        res.status(200).json({ message: 'Reporte registrado exitosamente' });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Ocurrio un error' });

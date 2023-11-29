@@ -12,7 +12,10 @@
                     </div>
                     <div class="form-group mb-3">
                         <label>Correo electronico:</label>
-                        <input type="email" class="form-control" name="email" [(ngModel)]="reportForm.email" required #email="ngModel">
+                        <input type="email" class="form-control" name="email" [(ngModel)]="reportForm.email" required pattern="[a-zA-Z0-9._%+-]+@utrivieramaya.edu.mx" #email="ngModel">
+                        <div *ngIf="form.controls['email'].hasError('pattern') && form.controls['email'].touched" class="error">
+                            Debes usar un correo institucional.
+                        </div>
                     </div>
                     <div class="form-group mb-3">
                         <label>Falla en el area de:</label>

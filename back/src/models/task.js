@@ -12,9 +12,10 @@ const TaskSchema = new Schema({
     imagePaths: [String],
     priority: String,
     status: String,
+    createdAt: Date,
     finalizedAt: Date
 }, {
-    timestamps: true
+    timestamps: false
 });
 
 module.exports = model('task', TaskSchema);
