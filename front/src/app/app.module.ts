@@ -14,8 +14,11 @@ import { SigninComponent } from './components/signin/signin.component';
 import { TaskComponent } from './components/tasks/task.component';
 import { ReportFormComponent } from './components/report-form/report-form.component';
 import { TaskHistoryComponent } from './components/task-history/task-history.component';
+import { HeaderComponent } from './components/header/header.component';
+import { SideNavComponent } from './components/side-nav/side-nav.component';
 
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+
 
 @NgModule({
   declarations: [
@@ -24,7 +27,9 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     SigninComponent,
     TaskComponent,
     ReportFormComponent,
-    TaskHistoryComponent
+    TaskHistoryComponent,
+    HeaderComponent,
+    SideNavComponent
   ],
   imports: [
     BrowserModule,

@@ -9,10 +9,12 @@ import { AuthService } from './services/auth.service';
 export class AppComponent {
   constructor( public authService: AuthService ) { }
 
+  sideNavStatus: boolean = false;
+
   getRole(){
     const data = this.authService.getDataUser();
     return data.role;
   }
-
+  
 }
 

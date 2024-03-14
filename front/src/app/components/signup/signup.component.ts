@@ -27,7 +27,7 @@ export class SignupComponent implements OnInit{
 
   ngOnInit(){
     this.userService.getUsers()
-      .subscribe( res => {this.users = res, console.log(this.users);})
+    .subscribe( res => this.users = res)
   }
 
   signUpForm = new FormGroup({
@@ -93,7 +93,7 @@ export class SignupComponent implements OnInit{
     let answer = confirm('¿Estas seguro de eliminar este usuario?')
     if (!answer) return;
     this.userService.deleteUser(userId)
-      .subscribe
+      .subscribe()
   }
 /* ingresa los datos del usuario selecionado al formulario updateUserForm */
   selectUser(index: any){
