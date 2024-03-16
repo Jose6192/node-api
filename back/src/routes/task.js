@@ -95,18 +95,25 @@ router.patch('/tasks/update/:taskId', verifyToken, async (req, res) => {
 
 module.exports = router;
 
-function verifyToken(req, res, next){
-    if(!req.headers.authorization){
-        res.status(401).json({ message: 'No tienes Permisos para hacer esto' });
+function verifyToken(req, res, next) {
+    if (!req.headers.authorization) {
+        return res.status(401).json({ message: 'No tienes permisos para hacer esto' });
     }
 
     const token = req.headers.authorization.split(' ')[1];
-    if (token === 'null'){
-        res.status(401).send("No tienes Permisos para hacer esto");
+    if (token === 'null') {
+        return res.status(401).send("No tienes permisos para hacer esto");
     }
 
-    const payload = jwt.verify(token, 'secretKey');
-    req.UserId = payload._id;
-    req.UserRol = payload.role;
-    next();
+    try {
+        const payload = jwt.verify(token, 'secretKey');
+        req.UserId = payload._id;
+        req.UserRol = payload.role;
+        next();
+    } catch (error) {
+        if (error instanceof jwt.TokenExpiredError) {
+            return res.status(401).json({ message: 'El token ha expirado' });
+        }
+        return res.status(401).json({ message: 'Token inválido' });
+    }
 }

@@ -21,7 +21,6 @@ router.post('/users/signup', verifyToken, async (req, res) => {
                 password = hash;
                 const newUser = new User({ name, password, rol });
                 await newUser.save();
-                const token = jwt.sign({ _id: newUser._id, role: newUser.rol }, 'secretKey');
                 res.status(200).json({ message: 'Usuario registrado con exito' });
             }
         })
@@ -38,7 +37,7 @@ router.post('/users/signin', async (req, res ) => {
         bcrypt.compare(password, user.password, (err, result) => { //comparar contraseña encriptada
             if (err) res.status(500).json('error interno al leer contraseña')
             else if (result) {
-                const token = jwt.sign({_id: user._id, role: user.rol}, 'secretKey');
+                const token = jwt.sign({_id: user._id, role: user.rol}, 'secretKey', {expiresIn: '12h'});
                 return res.status(200).json({token});
             }
             else return res.status(401).json({ message: '¡Oops! Parece que olvidaste tu contraseña' });       
@@ -109,18 +108,25 @@ router.patch('/users/update/:userId', verifyToken, upload.none(), async (req, re
 
 module.exports = router;
 
-function verifyToken(req, res, next){
-    if(!req.headers.authorization){
-        res.status(401).json({ message: 'No tienes Permisos para hacer esto' });
+function verifyToken(req, res, next) {
+    if (!req.headers.authorization) {
+        return res.status(401).json({ message: 'No tienes permisos para hacer esto' });
     }
 
     const token = req.headers.authorization.split(' ')[1];
-    if (token === 'null'){
-        res.status(401).send("No tienes Permisos para hacer esto");
+    if (token === 'null') {
+        return res.status(401).send("No tienes permisos para hacer esto");
     }
 
-    const payload = jwt.verify(token, 'secretKey');
-    req.UserId = payload._id;
-    req.UserRol = payload.role;
-    next();
+    try {
+        const payload = jwt.verify(token, 'secretKey');
+        req.UserId = payload._id;
+        req.UserRol = payload.role;
+        next();
+    } catch (error) {
+        if (error instanceof jwt.TokenExpiredError) {
+            return res.status(401).json({ message: 'El token ha expirado' });
+        }
+        return res.status(401).json({ message: 'Token inválido' });
+    }
 }
