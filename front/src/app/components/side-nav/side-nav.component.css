@@ -3,7 +3,7 @@
 }
 
 .side-nav-content {
-    color: white;
+    color: inherit;
     width: 230px;
     margin-left: 10px;
     margin-right: 10px;
@@ -44,6 +44,6 @@
 
 a {
     text-decoration: none;
-    color: white;
+    color: inherit
 }
 
