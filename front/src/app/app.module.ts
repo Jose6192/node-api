@@ -18,6 +18,8 @@ import { HeaderComponent } from './components/header/header.component';
 import { SideNavComponent } from './components/side-nav/side-nav.component';
 
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { HeaderUserComponent } from './components/header-user/header-user.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 
 @NgModule({
@@ -29,7 +31,9 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     ReportFormComponent,
     TaskHistoryComponent,
     HeaderComponent,
-    SideNavComponent
+    SideNavComponent,
+    HeaderUserComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

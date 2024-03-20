@@ -6,15 +6,18 @@ import { AuthService } from './services/auth.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent{
   constructor( public authService: AuthService ) { }
 
   sideNavStatus: boolean = false;
 
-  getRole(){
-    const data = this.authService.getDataUser();
-    return data.role;
+  toggleSideNav() {
+    this.sideNavStatus = !this.sideNavStatus;
   }
-  
+
+  isLoggedIn() {
+    return this.authService.loggedIn();
+  }
+
 }
 
