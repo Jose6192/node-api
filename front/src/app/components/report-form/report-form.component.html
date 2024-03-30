@@ -1,162 +1,235 @@
-<div class="row justify-content-center">
-    <div class="col-md-6 col-sm-10">
-        <form>
-            <h5 class="mb-0">Reporte de fallo</h5>
-            <div class="form-floating">
-                <form (ngSubmit)="onSubmit()" #form="ngForm">
-                    <div class="form-group mb-3">
-                        <label>Nombre completo:</label>
-                        <input type="text" class="form-control" name="name" [(ngModel)]="reportForm.name" autofocus
-                            required #name="ngModel">
-                    </div>
-                    <div class="form-group mb-3">
-                        <label>Correo electronico:</label>
-                        <input type="email" class="form-control" name="email" [(ngModel)]="reportForm.email" required
-                            pattern="[a-zA-Z0-9._%+-]+@utrivieramaya.edu.mx" #email="ngModel">
-                        <div *ngIf="form.controls['email'].hasError('pattern') && form.controls['email'].touched"
-                            class="error">
-                            Debes usar un correo institucional.
-                        </div>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label>Falla en el area de:</label>
-                        <select class="form-select" name="department" [(ngModel)]="reportForm.department" required
-                            #department="ngModel">
-                            <option value="Sistemas">Sistemas</option>
-                            <option value="Mantenimiento">Mantenimiento</option>
-                        </select>
-                    </div>
-                    <div class="form-group mb-3" *ngIf="reportForm.department === 'Sistemas'">
-                        <label>Tipo de fallo:</label>
-                        <select class="form-select" name="failType" [(ngModel)]="reportForm.failType" required>
-                            <option>Computo</option>
-                            <option>Impresora</option>
-                            <option>Internet</option>
-                            <option>Proyector</option>
-                            <option>Software</option>
-                            <option>Telefono</option>
-                            <option>Otro</option>
-                        </select>
-                    </div>
-                    <div class="form-group mb-3" *ngIf="reportForm.department === 'Mantenimiento'">
-                        <label>Tipo de fallo:</label>
-                        <select class="form-select" name="failType" [(ngModel)]="reportForm.failType" required>
-                            <option>Aire acondicionado</option>
-                            <option>Contacto electrico</option>
-                            <option>Fuga de agua</option>
-                            <option>Iluminacion</option>
-                            <option>Plafones</option>
-                            <option>Puertas</option>
-                            <option>Ventanas</option>
-                            <option>Otro</option>
-                        </select>
-                    </div>
-                    <div class="form-group mb-3" *ngIf="reportForm.failType === 'Otro'">
-                        <label>Indique el tipo de fallo:</label>
-                        <input type="text" class="form-control" name="failType" [(ngModel)]="reportForm.anotherFailType"
-                            required>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label>Edificio:</label>
-                        <select class="form-select" name="building" (change)="cleanPlace()"
-                            [(ngModel)]="reportForm.building" required>
-                            <option>Cafeteria</option>
-                            <option>Domo deportivo</option>
-                            <option>Edificio C</option>
-                            <option>Edificio D</option>
-                            <option>Edificio E</option>
-                            <option>Edificio F</option>
-                            <option>Edificio L</option>
-                        </select>
-                    </div>
-                    <div [ngSwitch]="reportForm.building">
-                        <div class="form-group mb-3" *ngSwitchCase="'Edificio C'">
-                            <label>Espacio afectado:</label>
-                            <select class="form-select" name="place" [(ngModel)]="reportForm.place" required>
-                                <option>Rectoria</option>
-                                <option>Direccion de planeacion</option>
-                                <option>Abogado general</option>
-                                <option>Biblioteca</option>
-                                <option>Direccion de administracion</option>
-                                <option>Servicios escolares</option>
-                                <option>Recursos humanos</option>
-                                <option>Recursos Materiales</option>
-                                <option>Contabilidad</option>
-                            </select>
-                        </div>
-                        <div class="form-group mb-3" *ngSwitchCase="'Edificio D'">
-                            <label>Espacio afectado:</label>
-                            <select class="form-select" name="place" [(ngModel)]="reportForm.place" required>
-                                <option>Subdireccion de Gastronomia</option>
-                                <option>Subdireccion de Admon, Mtto Y tic</option>
-                                <option>DC01</option>
-                                <option>DC02</option>
-                                <option>DC03</option>
-                                <option>DC04</option>
-                                <option>DC05</option>
-                                <option>DC06</option>
-                                <option>DC07</option>
-                                <option>DC08</option>
-                                <option>DC09</option>
-                                <option>DC10</option>
-                                <option>DC11</option>
-                                <option>DC12</option>
-                                <option>Area de maestros</option>
-                                <option>Laboratorio de computo 2</option>
-                                <option>D201</option>
-                                <option>D202</option>
-                                <option>D203</option>
-                                <option>D204</option>
-                                <option>D205</option>
-                                <option>D206</option>
-                                <option>D207</option>
-                                <option>D208</option>
-                                <option>D209</option>
-                                <option>D210</option>
-                                <option>D211</option>
-                                <option>D212</option>
-                                <option>Direccion de vinculacion</option>
-                                <option>Prensa y difucion</option>
-                                <option>Cultura y deporte</option>
-                                <option>Practicas y estadias</option>
-                                <option>Seguimineto a egresados</option>
-                                <option>Salon audiovisual</option>
-                                <option>Laboratorio de computo CAUD</option>
-                                <option>Laboratorio de computo "1"</option>
-                                <option>D101</option>
-                                <option>D102</option>
-                                <option>D103</option>
-                                <option>D104</option>
-                                <option>D105</option>
-                                <option>D106</option>
-                                <option>D107</option>
-                                <option>D108</option>
-                                <option>D109</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label>Describa el fallo:</label>
-                        <textarea class="form-control" name="description" rows="3" [(ngModel)]="reportForm.description" required></textarea>
-                    </div>
-                    <button class="btn btn-primary" [disabled]="form.invalid">Enviar</button>
-                </form>
+<div class="row">
+    <div class="col-md-6 ms-4">
+        <form (ngSubmit)="onSubmit()" #form="ngForm">
+            <div class="form-group mb-3">
+                <label>Nombre completo:</label>
+                <input type="text" class="form-control form-lg" name="name" [(ngModel)]="reportForm.name" autofocus required
+                    #name="ngModel">
             </div>
+            <div class="form-group mb-3">
+                <label>Correo electronico:</label>
+                <input type="email" class="form-control form-lg" name="email" [(ngModel)]="reportForm.email" required
+                    pattern="[a-zA-Z0-9._%+-]+@utrivieramaya.edu.mx" #email="ngModel">
+                <div *ngIf="form.controls['email'].hasError('pattern') && form.controls['email'].touched" class="error">
+                    Debes usar un correo institucional.
+                </div>
+            </div>
+            <div class="form-group mb-3">
+                <label>Falla en el area de:</label>
+                <select class="form-select form-lg" name="department" [(ngModel)]="reportForm.department" required
+                    #department="ngModel">
+                    <option value="Sistemas">Sistemas</option>
+                    <option value="Mantenimiento">Mantenimiento</option>
+                </select>
+            </div>
+            <div class="form-group mb-3" *ngIf="reportForm.department === 'Sistemas'">
+                <label>Tipo de fallo:</label>
+                <select class="form-select form-lg" name="failType" [(ngModel)]="reportForm.failType" required>
+                    <option>Computo</option>
+                    <option>Impresora</option>
+                    <option>Internet</option>
+                    <option>Proyector</option>
+                    <option>Software</option>
+                    <option>Telefono</option>
+                    <option>Otro</option>
+                </select>
+            </div>
+            <div class="form-group mb-3" *ngIf="reportForm.department === 'Mantenimiento'">
+                <label>Tipo de fallo:</label>
+                <select class="form-select form-lg" name="failType" [(ngModel)]="reportForm.failType" required>
+                    <option>Aire acondicionado</option>
+                    <option>Contacto electrico</option>
+                    <option>Fuga de agua</option>
+                    <option>Iluminacion</option>
+                    <option>Plafones</option>
+                    <option>Puertas</option>
+                    <option>Ventanas</option>
+                    <option>Otro</option>
+                </select>
+            </div>
+            <div class="form-group mb-3" *ngIf="reportForm.failType === 'Otro'">
+                <label>Indique el tipo de fallo:</label>
+                <input type="text" class="form-control form-lg" name="failType" [(ngModel)]="reportForm.anotherFailType"
+                    required>
+            </div>
+            <div class="form-group mb-3">
+                <label>Edificio:</label>
+                <select class="form-select form-lg" name="building" (change)="cleanPlace()" [(ngModel)]="reportForm.building"
+                    required>
+                    <option>Cafeteria</option>
+                    <option>Domo deportivo</option>
+                    <option>Edificio C</option>
+                    <option>Edificio D</option>
+                    <option>Edificio E</option>
+                    <option>Edificio F</option>
+                    <option>Edificio L</option>
+                </select>
+            </div>
+            <div [ngSwitch]="reportForm.building">
+                <div class="form-group mb-3" *ngSwitchCase="'Edificio C'">
+                    <label>Espacio afectado:</label>
+                    <select class="form-select form-lg" name="place" [(ngModel)]="reportForm.place" required>
+                        <option>Rectoria</option>
+                        <option>Direccion de planeacion</option>
+                        <option>Abogado general</option>
+                        <option>Biblioteca</option>
+                        <option>Direccion de administracion</option>
+                        <option>Servicios escolares</option>
+                        <option>Recursos humanos</option>
+                        <option>Recursos Materiales</option>
+                        <option>Contabilidad</option>
+                    </select>
+                </div>
+                <div class="form-group mb-3" *ngSwitchCase="'Edificio D'">
+                    <label>Espacio afectado:</label>
+                    <select class="form-select form-lg" name="place" [(ngModel)]="reportForm.place" required>
+                        <option>Subdireccion de Gastronomia</option>
+                        <option>Subdireccion de Admon, Mtto Y tic</option>
+                        <option>DC01</option>
+                        <option>DC02</option>
+                        <option>DC03</option>
+                        <option>DC04</option>
+                        <option>DC05</option>
+                        <option>DC06</option>
+                        <option>DC07</option>
+                        <option>DC08</option>
+                        <option>DC09</option>
+                        <option>DC10</option>
+                        <option>DC11</option>
+                        <option>DC12</option>
+                        <option>Area de maestros</option>
+                        <option>Laboratorio de computo 2</option>
+                        <option>D201</option>
+                        <option>D202</option>
+                        <option>D203</option>
+                        <option>D204</option>
+                        <option>D205</option>
+                        <option>D206</option>
+                        <option>D207</option>
+                        <option>D208</option>
+                        <option>D209</option>
+                        <option>D210</option>
+                        <option>D211</option>
+                        <option>D212</option>
+                        <option>Direccion de vinculacion</option>
+                        <option>Prensa y difucion</option>
+                        <option>Cultura y deporte</option>
+                        <option>Practicas y estadias</option>
+                        <option>Seguimineto a egresados</option>
+                        <option>Salon audiovisual</option>
+                        <option>Laboratorio de computo CAUD</option>
+                        <option>Laboratorio de computo "1"</option>
+                        <option>D101</option>
+                        <option>D102</option>
+                        <option>D103</option>
+                        <option>D104</option>
+                        <option>D105</option>
+                        <option>D106</option>
+                        <option>D107</option>
+                        <option>D108</option>
+                        <option>D109</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group mb-3">
+                <label>Describa el fallo:</label>
+                <textarea class="form-control form-lg" name="description" rows="3" [(ngModel)]="reportForm.description"
+                    required></textarea>
+            </div>
+            <button class="btn btn-primary" [disabled]="form.invalid">Enviar</button>
         </form>
     </div>
+    <div class="col-md-4">
+        <p class="h2">Genera un reporte</p>
+        <ol>
+            <li>Completa los campos del formulario.</li>
+            <li>Idenditifica el area afectado con los planos que estan abajo.</li>
+            <li>Haz clic en "Enviar".</li>
+            <li>Resiviras correo cuando tu reporte este resuelto.</li>
+        </ol>
+        <p class="h2">FAQ</p>
+        <div class="accordion" id="accordionExample">
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                        Restablecer contraseña de correo institucional
+                    </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        La red esta lenta
+                    </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nisi!
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        Bloqueo de paginas web
+                    </button>
+                </h2>
+                <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nisi!
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                        Lorem ipsum dolor sit amet.
+                    </button>
+                </h2>
+                <div id="collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nisi!
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                        Lorem ipsum dolor sit amet.
+                    </button>
+                </h2>
+                <div id="collapseFive" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nisi!
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<hr>
+
+<hr class="my-4">
 
 <div class="row justify-content-center">
     <div class=" col-md-10 col-sm-10 display-grid col">
         <h2>Planos de Edificios UTRM</h2>
-        <div class="d-flex flex-wrap">
-            <button class="btn" (click)="selectBuilding('Campus')">Campus </button>
-            <button class="btn" (click)="selectBuilding('Edificio C')">Edificio C </button>
-            <button class="btn" (click)="selectBuilding('Edificio D')">Edificio D </button>
-            <button class="btn" (click)="selectBuilding('Edificio E')">Edificio E </button>
-            <button class="btn" (click)="selectBuilding('Edificio F')">Edificio F </button>
-            <button class="btn" (click)="selectBuilding('Edificio L')">Edificio L </button>
+        <div class="d-flex flex-wrap gap-2">
+            <button type="button" class="btn btn-secondary" (click)="selectBuilding('Campus')">Campus </button>
+            <button type="button" class="btn btn-secondary" (click)="selectBuilding('Edificio C')">Edificio C </button>
+            <button type="button" class="btn btn-secondary" (click)="selectBuilding('Edificio D')">Edificio D </button>
+            <button type="button" class="btn btn-secondary" (click)="selectBuilding('Edificio E')">Edificio E </button>
+            <button type="button" class="btn btn-secondary" (click)="selectBuilding('Edificio F')">Edificio F </button>
+            <button type="button" class="btn btn-secondary" (click)="selectBuilding('Edificio L')">Edificio L </button>
         </div>
         <div [ngSwitch]="building">
             <img *ngSwitchCase="'Campus'" class="img-fluid" src="../../../assets/img/building/campus-utrm.jpg"
@@ -182,4 +255,3 @@
 <div class="row justify-content-center">
     <app-footer></app-footer>
 </div>
-

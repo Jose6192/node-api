@@ -6,7 +6,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Registrar usuario</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Crear usuario</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -45,7 +45,7 @@
                         {{successMessage}}
                     </div>
                     <button class="btn btn-primary btn-block" [disabled]="signUpForm.invalid">
-                        Registrar
+                        Crear
                     </button>
                 </form>
             </div>
@@ -104,7 +104,8 @@
 </div>
 <!-- tabla de usuarios -->
 <div class="table-responsive">
-    <table class="table">
+    <table class="table table-striped caption-top">
+        <caption>Lista de usuarios</caption>
         <thead>
             <tr>
                 <th scope="col">#</th>
@@ -113,15 +114,15 @@
                 <th scope="col">Opciones</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="table-group-divider">
             <tr *ngFor="let user of this.users; let i = index">
-                <td>{{i + 1}}</td>
+                <th>{{i + 1}}</th>
                 <td>{{user.name}}</td>
                 <td>{{user.rol}}</td>
                 <td>
-                    <button class="btn btn-danger mx-1" (click)="deleteUser(i)">Eliminar</button>
                     <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editUser"
                         (click)="selectUser(i)">Editar</button>
+                    <button class="btn btn-danger mx-1" (click)="deleteUser(i)">Eliminar</button>
                 </td>
             </tr>
         </tbody>
