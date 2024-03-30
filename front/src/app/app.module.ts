@@ -20,6 +20,7 @@ import { SideNavComponent } from './components/side-nav/side-nav.component';
 /* import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2'; */
 import { HeaderUserComponent } from './components/header-user/header-user.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { FooterComponent } from './components/footer/footer.component';
     HeaderComponent,
     SideNavComponent,
     HeaderUserComponent,
-    FooterComponent
+    FooterComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,

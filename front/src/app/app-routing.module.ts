@@ -7,6 +7,7 @@ import { TaskComponent } from './components/tasks/task.component';
 import { ReportFormComponent } from './components/report-form/report-form.component'
 import { TechnicalFormComponent } from './components/technical-form/technical-form.component';
 import { TaskHistoryComponent } from './components/task-history/task-history.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
 import { AuthGuard } from './auth.guard';
 
@@ -36,6 +37,9 @@ const routes: Routes = [{
   path: 'task-history',
   component: TaskHistoryComponent,
   canActivate: [AuthGuard]
+},{
+  path: '**',
+  component: NotFoundComponent
 }];
 
 @NgModule({
