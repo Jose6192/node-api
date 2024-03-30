@@ -10,6 +10,7 @@ interface ReportForm{
   anotherFailType: string;
   building: string;
   place: string;
+  description: string;
 }
 
 @Component({
@@ -27,15 +28,6 @@ export class ReportFormComponent{
     this.building = building;
   }
 
-/*   buildings = [
-    {name: 'Campus', img:{firstF:'campus-utrm.jpg'}},
-    {name: 'Edificio C', img: { firstF:'Edificio_C_Biblioteca.jpg'}},
-    {name: 'Edificio D', img: { firstF:'Edificio_D_Docencia_PB.jpg', secondF:'Edificio_D_Docencia_PA.jpg'}},
-    {name: 'Edificio E', img: { firstF:'Edificio_E_Gastro.jpg'}},
-    {name: 'Edificio F', img: { firstF:'Edificio_F_Mtto_Indus.jpg'}},
-    {name: 'Edificio L', img: { firstF:'Edif_L_Docencia_PB.jpg', secondF:'Edif_L_Docencia_PA.jpg'}},
-  ] */
-
   reportForm: ReportForm = {
     name: '',
     email: '',
@@ -43,7 +35,8 @@ export class ReportFormComponent{
     failType: '',
     anotherFailType: '',
     building: '',
-    place: ''
+    place: '',
+    description: ''
   }
 
   constructor( private taskService:TasksService ){}
@@ -63,7 +56,8 @@ export class ReportFormComponent{
           failType: '',
           anotherFailType: '',
           building: '',
-          place: ''
+          place: '',
+          description: ''
         }
       }, err => alert('Error: '+ err.status +' '+ err.error.message));
 

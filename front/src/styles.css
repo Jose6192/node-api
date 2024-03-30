@@ -1,1 +1,5 @@
 @import "~bootstrap-icons/font/bootstrap-icons.css";
+
+.modal-backdrop {
+    z-index: 0;
+}

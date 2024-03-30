@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef  } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
@@ -17,7 +17,7 @@ export class SignupComponent implements OnInit{
   updateUserForm!: FormGroup;
   selectedUser: any;
 
-  constructor(public authService: AuthService, public userService:UserService, router:Router, private formBuilder: FormBuilder) {
+  constructor(public authService: AuthService, public userService:UserService, router:Router, private formBuilder: FormBuilder, private cdr: ChangeDetectorRef) {
     this.updateUserForm = this.formBuilder.group({
       name: ['', Validators.required],
       password: ['', Validators.required],
@@ -26,8 +26,7 @@ export class SignupComponent implements OnInit{
   }
 
   ngOnInit(){
-    this.userService.getUsers()
-    .subscribe( res => this.users = res)
+    this.getUsers();
   }
 
   signUpForm = new FormGroup({
@@ -35,6 +34,12 @@ export class SignupComponent implements OnInit{
     'password' : new FormControl('', Validators.required),
     'rol' : new FormControl('', Validators.required)
   });
+
+  getUsers() {
+    this.userService.getUsers()
+      .subscribe( res => this.users = res)
+    this.cdr.detectChanges();
+  }
 
 
   signUp() {
@@ -49,7 +54,7 @@ export class SignupComponent implements OnInit{
         (res) => {
           this.successMessage = res.message;      
           this.signUpForm.reset();
-          this.users.push(newData);
+          this.getUsers();
         },
         (err) => {
           if (err.error && err.error.message) {
@@ -74,9 +79,10 @@ export class SignupComponent implements OnInit{
       .subscribe(
         (res) => {
           this.successMessage = res.message;
-          this.users[index].name = this.updateUserForm.get('name')?.value;
+          this.getUsers();
+          /* this.users[index].name = this.updateUserForm.get('name')?.value;
           this.users[index].password = this.updateUserForm.get('password')?.value;
-          this.users[index].rol = this.updateUserForm.get('rol')?.value;  
+          this.users[index].rol = this.updateUserForm.get('rol')?.value;   */
         },
         (err) => {
           if (err.error && err.error.message) {
@@ -93,9 +99,23 @@ export class SignupComponent implements OnInit{
     let answer = confirm('¿Estas seguro de eliminar este usuario?')
     if (!answer) return;
     this.userService.deleteUser(userId)
-      .subscribe()
+      .subscribe( (res) => {
+        if (res.status != 200) {
+          console.log('usuario eliminado');
+          this.users.splice(index, 1);
+        }
+        alert('Usuario eliminado');
+      },
+      (err) => {
+        if (err.error && err.error.message) {
+          this.errorMessage = err.error.message;
+        } else {
+          this.errorMessage = 'Error desconocido al eliminar usuario.';
+        }
+      })
+
   }
-/* ingresa los datos del usuario selecionado al formulario updateUserForm */
+/* EDITAR ingresa los datos del usuario selecionado al formulario updateUserForm */
   selectUser(index: any){
     this.selectedUser = index;
     this.updateUserForm.patchValue({

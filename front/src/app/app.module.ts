@@ -17,7 +17,7 @@ import { TaskHistoryComponent } from './components/task-history/task-history.com
 import { HeaderComponent } from './components/header/header.component';
 import { SideNavComponent } from './components/side-nav/side-nav.component';
 
-import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+/* import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2'; */
 import { HeaderUserComponent } from './components/header-user/header-user.component';
 import { FooterComponent } from './components/footer/footer.component';
 
@@ -41,7 +41,7 @@ import { FooterComponent } from './components/footer/footer.component';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    SweetAlert2Module.forRoot(),
+    /* SweetAlert2Module.forRoot(), */
     JwtModule.forRoot({
       config: {
         tokenGetter: function  tokenGetter() {

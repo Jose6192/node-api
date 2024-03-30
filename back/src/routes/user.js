@@ -75,10 +75,10 @@ router.get('/users/get/:userId', verifyToken, async (req, res) => {
 router.delete('/users/delete/:userId', verifyToken, async (req, res) => {
     try {
         const userId = req.params.userId;
-        const deletedUser = await User.findByIdAndDelete(userId);
-        if (!deletedUser) {
-            return res.status(404).json({ message: 'Usuario no encontrado' });
-        }
+        const user = await User.findById(userId);
+        if (user.rol === 'Admin') return res.status(401).json({ message: 'No puedes eliminar a un administrador' });
+        if (!user) return res.status(404).json({ message: 'Usuario no encontrado' });
+        await User.findByIdAndDelete(userId);
         res.status(200).json({ message: 'Usuario eliminado con éxito' });
     }catch (error) {
         console.error(error);

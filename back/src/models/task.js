@@ -8,6 +8,7 @@ const TaskSchema = new Schema({
     anotherFailType: String,
     building: String,
     place: String,
+    description: String,
     folio: String,
     imagePaths: [String],
     priority: String,

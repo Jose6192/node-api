@@ -31,7 +31,7 @@ router.get('/tasks/get/:taskId', verifyToken, async (req, res) => {
 
 router.post('/tasks/create', async (req, res) => {
     try {
-        const { name, email, department, failType, anotherFailType, building, place } = req.body;
+        const { name, email, department, failType, anotherFailType, building, description, place } = req.body;
         const finalizedAt = null;
         const createdAt = new Date();
         createdAt.setHours(createdAt.getHours() - 5) //establece horario sureste de mexico
@@ -45,6 +45,7 @@ router.post('/tasks/create', async (req, res) => {
             failType,
             anotherFailType,
             building,
+            description,
             priority,
             place,
             folio,
