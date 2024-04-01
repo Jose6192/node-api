@@ -1,4 +1,4 @@
-const {Router} = require('express');
+const { Router } = require('express');
 const router = Router();
 const Task = require('../models/task')
 const jwt = require('jsonwebtoken');
@@ -35,9 +35,13 @@ router.post('/tasks/create', async (req, res) => {
         const finalizedAt = null;
         const createdAt = new Date();
         createdAt.setHours(createdAt.getHours() - 5) //establece horario sureste de mexico
-        const folio = ''
         const priority = '';
-        const status = 'pending';
+        const status = 'pendiente';
+        const solvedby = '';
+        const imagePaths = [];
+
+        const folio = await getNextFolio();
+
         const newTask = new Task({
             name,
             email,
@@ -49,12 +53,14 @@ router.post('/tasks/create', async (req, res) => {
             priority,
             place,
             folio,
+            imagePaths,
             status,
+            solvedby,
             createdAt,
             finalizedAt
         });
         await newTask.save();
-        res.status(200).json({ message: 'Reporte registrado exitosamente' });
+        res.status(200).json({ message: 'Reporte registrado exitosamente', folio });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Ocurrio un error' });
@@ -80,7 +86,7 @@ router.patch('/tasks/update/:taskId', verifyToken, async (req, res) => {
     try {
         const taskId = req.params.taskId;
         const updates = req.body;
-        
+
         const task = await Task.findById(taskId);
         if (!task) {
             return res.status(404).json({ message: 'Tarea no encontrada' });
@@ -88,9 +94,30 @@ router.patch('/tasks/update/:taskId', verifyToken, async (req, res) => {
 
         await Task.updateOne({ _id: taskId }, { $set: updates });
 
-        res.status(200).json({ message: 'Tarea actualizada con éxito'});
+        res.status(200).json({ message: 'Tarea actualizada con éxito' });
     } catch (error) {
         res.status(400).json({ message: 'Error al actualizar la tarea' });
+    }
+});
+
+router.patch('/tasks/upload/:taskId', verifyToken, multerConfig, async (req, res) => {
+    try {
+        const taskId = req.params.taskId;
+        const updates = req.body;
+        
+        console.log(req.files);
+        if (req.files) {
+            // guardar rutas relativas
+            const imagePaths = req.files.map(file => path.join('/uploads', file.filename));
+            updates.imagePaths = imagePaths;
+        }
+
+        await Task.updateOne({ _id: taskId }, { $set: updates });
+
+        res.status(200).json({ message: 'guardado exitosamente' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error al guardadar el archivo' });
     }
 });
 
@@ -117,4 +144,24 @@ function verifyToken(req, res, next) {
         }
         return res.status(401).json({ message: 'Token inválido' });
     }
+}
+
+
+async function getNextFolio() {
+    // Encuentra el último reporte creado
+    const lastTask = await Task.findOne().sort({ createdAt: -1 });
+    let lastFolioNumber = 0;
+
+    // Si hay un reporte, extrae el número de folio
+    if (lastTask) {
+        const lastFolio = lastTask.folio;
+        const lastFolioParts = lastFolio.split('-');
+        lastFolioNumber = parseInt(lastFolioParts[lastFolioParts.length - 1]);
+    }
+
+    // Incrementa el número de folio y dar formato
+    const nextFolioNumber = lastFolioNumber + 1;
+    const nextFolio = `F-${nextFolioNumber.toString().padStart(4, '0')}`; // Formato F-XXXX
+
+    return nextFolio;
 }

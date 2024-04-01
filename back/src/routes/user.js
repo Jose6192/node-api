@@ -8,8 +8,6 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs')
 const saltRounds = 10; /* TODOS LOS USUARIOS TIENEN EL MISMO NUEMOR DE SALTOS!!! */
 
-router.get('/', (req, res) => res.send('hola soy una api privada xd'))
-
 router.post('/users/signup', verifyToken, async (req, res) => {
     if (req.UserRol !== 'Admin') return res.status(401).json({ message: 'No tienes permiso para crear usuarios' });
     try {
@@ -37,7 +35,7 @@ router.post('/users/signin', async (req, res ) => {
         bcrypt.compare(password, user.password, (err, result) => { //comparar contraseña encriptada
             if (err) res.status(500).json('error interno al leer contraseña')
             else if (result) {
-                const token = jwt.sign({_id: user._id, role: user.rol}, 'secretKey', {expiresIn: '12h'});
+                const token = jwt.sign({_id: user._id, role: user.rol, name: user.name}, 'secretKey', {expiresIn: '12h'});
                 return res.status(200).json({token});
             }
             else return res.status(401).json({ message: '¡Oops! Parece que olvidaste tu contraseña' });       

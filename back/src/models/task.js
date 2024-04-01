@@ -12,6 +12,7 @@ const TaskSchema = new Schema({
     folio: String,
     imagePaths: [String],
     priority: String,
+    solvedby: String,
     status: String,
     createdAt: Date,
     finalizedAt: Date

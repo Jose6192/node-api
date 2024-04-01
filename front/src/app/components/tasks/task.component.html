@@ -1,56 +1,116 @@
-<div *ngIf="tasks.length === 0" class="text-center">
+<div *ngIf="reports.length === 0" class="text-center">
     <h3>No hay reportes para mostrar</h3>
 </div>
 
-<div class="row row-cols-1 row-cols-md-2 g-4">    
-    <div class="col-md-4" *ngFor="let task of getVisibleTasks(); let i = index">
-        <div class="card" role="button" (click)="onCardClick(task)">
+<div class="row row-cols-1 row-cols-md-2 g-4">
+    <div class="col-md-4" *ngFor="let report of getVisibleReports(); let i = index">
+        <div class="card" role="button" (click)="selectReport(report)" data-bs-toggle="modal"
+            [attr.data-bs-target]="'#openModal' + i">
             <div class="card-body">
-                <h3>{{task.failType}}</h3>   
-                <p>{{task.building}}</p>
-                <div *ngIf="task === selectedTask">
-                    <div *ngIf="task.anotherFailType !== ''">
-                    <p><b>tipo de falla:</b> {{task.anotherFailType}}</p>
-                    </div>
-                    <p><b>Reportado por:</b> {{task.name}}</p>
-                    <p><b>email:</b> {{task.email}}</p>
-                    <p><b>departamento:</b> {{task.department}}</p>
-                    <div *ngFor="let image of task.imagePaths; let i = index">
-                        <p><b>({{i+1}}) Imagen: </b><a href="{{imageURL + image}}" target="_blank" >abrir</a></p>                        
-                    </div>
-                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#completeReport">Finalizar</button>
-                    <button class="btn btn-primary" (click)="transferTask(i, task)">Transferir</button>
-                    <button class="btn btn-danger" (click)="deleteTask(i, task)">Eliminar</button>
-                </div>
+                <h3>{{report.failType}}</h3>
+                <p>{{report.building}}</p>
             </div>
-            <div class="card-footer justify-content-between low-priority-footer" [ngClass]="{'low-priority-footer': task.priority === 'Baja', 'medium-priority-footer': task.priority === 'Media', 'high-priority-footer': task.priority=== 'Alta'}">
-                {{task.createdAt | date: 'mediumDate'}}
+            <div class="card-footer justify-content-between low-priority-footer"
+                [ngClass]="{'low-priority-footer': report.priority === 'Baja', 'medium-priority-footer': report.priority === 'Media', 'high-priority-footer': report.priority=== 'Alta'}">
+                <strong>{{report.createdAt | date: 'mediumDate'}}</strong>
+            </div>
+        </div>
+        <!-- Modal abrir reporte -->
+        <div class="modal fade" [id]="'openModal' + i" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Informe de Reporte</h1>
+                        <div class="dropdown">
+                            <button class="btn btn-warning dropdown-toggle btn-sm mx-4" type="button"
+                                data-bs-toggle="dropdown">
+                                Proridad
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><button type="button" class="btn btn-primary btn-sm"
+                                        (click)="changepriority(i,report,'Baja')">Baja</button></li>
+                                <li><button type="button" class="btn btn-danger btn-sm"
+                                        (click)="changepriority(i,report,'Media')">Media</button></li>
+                                <li><button type="button" class="btn btn-warning btn-sm"
+                                        (click)="changepriority(i,report,'Alta')">Alta</button></li>
+                            </ul>
+                        </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="cerrar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <strong>Reportado por: </strong>
+                        <p>{{report.name}}</p>
+                        <strong>Correo: </strong>
+                        <p>{{report.email}}</p>
+                        <strong>Tipo de falla: </strong>
+                        <p>{{report.failType}}</p>
+                        <p>{{report.anotherFailType}}</p>
+                        <strong>Edificio: </strong>
+                        <p>{{report.building}}</p>
+                        <strong>Lugar: </strong>
+                        <p>{{report.place}}</p>
+                        <strong>Descripcion: </strong>
+                        <p>{{report.description}}</p>
+                        <strong>Departamento: </strong>
+                        <p>{{report.department}}</p>
+                        <strong>fecha de reporte: </strong>
+                        <p>{{report.createdAt | date: 'mediumDate'}}</p>
+                        <strong>estado: </strong>
+                        <p>{{report.status}}</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                            data-bs-target="#finalizarModal" (click)="generateFormData()" >siguiente</button>
+                        <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Escalar</button>
+                        <button type="button" class="btn btn-secondary" (click)="transferReport(i, report)">Transferir
+                            departamento</button>
+                        <button class="btn btn-danger" (click)="deleteReport(i, report)">Eliminar</button>
+                    </div>
+                </div>
             </div>
         </div>
         <!-- Modal finalizar reporte -->
-        <div class="modal fade" id="completeReport" tabindex="-1" aria-labelledby="completeReportModalLabel" aria-hidden="true">
+        <div class="modal fade" id="finalizarModal" tabindex="-1" aria-labelledby="finalizarModalLabel"
+            aria-hidden="true">
             <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Informe de servicio</h1>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Completar Reporte</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form (ngSubmit)="onSubmit()" [formGroup]="compleateForm">
+                            <div class="mb-3">
+                                <label  class="col-form-label">Folio:</label>
+                                <p>{{report.folio}}</p>
+                            </div>
+                            <div class="mb-3">
+                                <label  class="col-form-label">Resuelto por:</label>
+                                <p>{{compleateReportData.solvedby}}</p>
+                            </div>
+                            <div class="mb-3">
+                                <label  class="col-form-label">Fecha de inicio:</label>
+                                <p>{{report.createdAt | date: 'mediumDate'}}</p>
+                            </div>
+                            <div class="mb-3">
+                                <label  class="col-form-label">Fecha de Terminado:</label>
+                                <p>{{compleateReportData.finalizedAt | date: 'mediumDate'}}</p>
+                            </div>
+                            <div class="mb-3">
+                                <label for="message-text" class="col-form-label">Descripción del servicio:</label>
+                                <textarea class="form-control" id="message-text"
+                                    formControlName="description"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="images" class="col-form-label">Evidencia:</label>
+                                <input type="file"  accept="image/*" multiple class="form-control" id="images" (change)="onFileSelect($event)" formControlName="images">
+                            </div>
+
+                            <button type="submit" class="btn btn-success" >Finalizar
+                                reporte</button>
+                        </form>
+                    </div>
                 </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="mb-3">
-                        <label for="message-text" class="col-form-label">Descripción del servicio:</label>
-                        <textarea class="form-control" id="message-text"></textarea>
-                        </div>
-                        <div class="mb-3">
-                        <label for="message-text" class="col-form-label">Evidencia:</label>
-                        <input type="file" class="form-control" id="message-text">
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">cancelar</button>
-                <button type="button" class="btn btn-primary" (click)="completeTask(i, task)" >Finalizar</button>
-                </div>
-            </div>
             </div>
         </div>
     </div>

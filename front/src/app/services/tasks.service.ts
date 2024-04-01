@@ -25,7 +25,10 @@ export class TasksService {
   transferTask(id: string, updates: { department: string }) {
     return this.http.patch<any>(this.URL + '/tasks/update/' + id, updates);
   }
-  compleateTask(id: string, updates: { status: string, completedTime: Date }) {
+  compleateTask(id: string, updates: FormData) {
+    return this.http.patch<any>(this.URL + '/tasks/upload/' + id, updates);
+  }
+  changePriority(id: string, updates: { priority: string }) {
     return this.http.patch<any>(this.URL + '/tasks/update/' + id, updates);
   }
 }

@@ -48,7 +48,7 @@ export class ReportFormComponent{
   onSubmit():void{
     this.taskService.createTask(this.reportForm)
       .subscribe(res => {
-        alert(res.message);
+        alert(res.message + ' Su folio es: ' + res.folio);
         this.reportForm = {
           name: '',
           email: '',
