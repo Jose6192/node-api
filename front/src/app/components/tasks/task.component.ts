@@ -37,12 +37,15 @@ export class TaskComponent implements OnInit {
 
   onSubmit() {
     const formData = new FormData();
+    for (let i = 0; i < this.selectedFile?.length; i++) {
+      formData.append('images', this.selectedFile[i]);
+    }
     formData.append('finalizedAt', this.compleateReportData.finalizedAt);
     formData.append('solvedby', this.compleateReportData.solvedby);
     formData.append('description', this.compleateForm.get('description')!.value);
-    formData.append('images', this.selectedFile);
     formData.append('status', 'completado');
     formData.append('imagePaths', '');
+    
 
     this.tasksService.compleateTask(this.selectedReport._id, formData)
       .subscribe(
@@ -56,9 +59,8 @@ export class TaskComponent implements OnInit {
   }
 
   onFileSelect(event:any) {
-    if (event.target.files.length > 0) {
-      this.selectedFile = event.target.files[0];
-    }
+    this.selectedFile = event.target.files;
+    this.compleateForm.get('images')?.setValue(this.selectedFile);
   }
 
 
