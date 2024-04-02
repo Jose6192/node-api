@@ -1,15 +1,18 @@
 <div class="container-fluid g-0">
 
-  <ng-container *ngIf="isLoggedIn(); else headerUser" > <!-- usuario identificado -->
-    <app-header (sideNavToggled)="sideNavStatus = $event"></app-header>
-    <main>
+  <ng-container *ngIf="isLogedIn(); else headerUser"> <!-- usuario identificado -->
+    <ng-container *ngIf="!tokenIsExpired(); else headerUser">
 
-      <app-side-nav [sideNavStatus]="sideNavStatus" [ngClass]="{'app-side-nav-open': sideNavStatus}"></app-side-nav>
-      <div class="display-area p-3" [ngClass]="{'display-area-shrink': sideNavStatus}">
-        <router-outlet></router-outlet>
-      </div>
+      <app-header (sideNavToggled)="sideNavStatus = $event"></app-header>
+      <main>
 
-    </main>
+        <app-side-nav [sideNavStatus]="sideNavStatus" [ngClass]="{'app-side-nav-open': sideNavStatus}"></app-side-nav>
+        <div class="display-area p-3" [ngClass]="{'display-area-shrink': sideNavStatus}">
+          <router-outlet></router-outlet>
+        </div>
+
+      </main>
+    </ng-container>
   </ng-container>
 
   <ng-template #headerUser> <!-- usuario NO identidicado -->

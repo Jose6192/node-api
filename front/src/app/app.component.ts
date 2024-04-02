@@ -15,7 +15,11 @@ export class AppComponent{
     this.sideNavStatus = !this.sideNavStatus;
   }
 
-  isLoggedIn() {
+  tokenIsExpired() {
+    return this.authService.tokenIsExpired();
+  }
+
+  isLogedIn() {
     return this.authService.loggedIn();
   }
 
