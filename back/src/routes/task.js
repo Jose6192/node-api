@@ -108,7 +108,7 @@ router.patch('/tasks/upload/:taskId', verifyToken, multerConfig, async (req, res
         console.log(req.files);
         if (req.files) {
             // guardar rutas relativas
-            const imagePaths = req.files.map(file => path.join('/uploads', file.filename));
+            const imagePaths = req.files.map(file => file.filename);
             updates.imagePaths = imagePaths;
         }
 
