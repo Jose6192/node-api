@@ -42,3 +42,7 @@ nav {
     text-decoration: none;
     color: inherit;
 }
+
+.form-check {
+    margin-left: 10px;
+}
