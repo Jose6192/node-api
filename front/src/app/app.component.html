@@ -33,25 +33,26 @@
             <span class="navbar-toggler-icon"></span>
           </button>
           <!-- Profile Logo -->
-            <div class="profile-logo dropstart">
-              <button class="btn dropdown-toggle" data-bs-toggle="dropdown">
-                <i class="bi bi-person-circle"></i>
-              </button>
-              <ul class="dropdown-menu">
-                <li class="form-check-reverse form-switch ">
-                  <div *ngIf="isDarkTheme; else moon">
-                    <label class="form-check-label" for="themeSwitch" #moon> <i class="bi bi-moon-fill"></i></label>
-                  </div>
-                  <ng-template #moon>
-                    <label class="form-check-label" for="themeSwitch"> <i class="bi bi-sun-fill"></i></label>
-                  </ng-template>
-                  <input class="form-check-input me-5" type="checkbox" id="themeSwitch" [(ngModel)]="isDarkTheme"
-                    (click)="toggleTheme()">
-                </li>
-                <li><a class="dropdown-item" href="#"><i class="bi bi-gear-fill"></i> configuracion</a></li>
-                <li><a class="dropdown-item text-danger" href="/signin" (click)="logOut()"><i class="bi bi-door-closed-fill"></i> Cerrar sesión</a></li>
-              </ul>
-            </div>   
+          <div class="profile-logo dropstart">
+            <button class="btn dropdown-toggle" data-bs-toggle="dropdown">
+              <i class="bi bi-person-circle"></i>
+            </button>
+            <ul class="dropdown-menu">
+              <li class="form-check-reverse form-switch ">
+                <div *ngIf="isDarkTheme; else moon">
+                  <label class="form-check-label" for="themeSwitch" #moon> <i class="bi bi-moon-fill"></i></label>
+                </div>
+                <ng-template #moon>
+                  <label class="form-check-label" for="themeSwitch"> <i class="bi bi-sun-fill"></i></label>
+                </ng-template>
+                <input class="form-check-input me-5" type="checkbox" id="themeSwitch" [(ngModel)]="isDarkTheme"
+                  (click)="toggleTheme()">
+              </li>
+              <li><a class="dropdown-item" href="#"><i class="bi bi-gear-fill"></i> configuracion</a></li>
+              <li><a class="dropdown-item text-danger" href="/signin" (click)="logOut()"><i
+                    class="bi bi-door-closed-fill"></i> Cerrar sesión</a></li>
+            </ul>
+          </div>
         </nav>
         <main class="content px-3 py-2">
           <div class="container-fluid">
@@ -68,7 +69,11 @@
 <!-- usuario NO identidicado -->
 <ng-template #headerUser>
   <app-header-user></app-header-user>
-  <div class="mt-4">
-    <router-outlet></router-outlet>
-  </div>
+  <main class="content px-3 pt-2">
+    <div class="container-fluid">
+      <div class="mb-3">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </main>
 </ng-template>

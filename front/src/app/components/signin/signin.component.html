@@ -16,11 +16,8 @@
                     <div class="form-group mb-4">
                         <input type="password" formControlName="password" name="password" class="form-control" placeholder="Contraseña" required>
                     </div>
-                    <div class="alert alert-danger mb-4" *ngIf="signInForm.get('password')?.touched && signInForm.get('password')?.errors?.['required']">
+                    <div class="alert alert-danger mb-4" *ngIf="signInForm.get('password')?.touched && signInForm.get('password')?.errors?.['required']" >
                         Contraseña obligatoria
-                    </div>
-                    <div class="alert alert-danger mb-4" *ngIf="errorMessage">
-                        {{errorMessage}}
                     </div>
                     <button class="btn btn-success btn-block" [disabled]="signInForm.invalid">
                         Iniciar sesion

@@ -10,8 +10,8 @@
                 <label>Correo electronico:</label>
                 <input type="email" class="form-control form-lg" name="email" [(ngModel)]="reportForm.email" required
                     pattern="[a-zA-Z0-9._%+-]+@utrivieramaya.edu.mx" #email="ngModel">
-                <div *ngIf="form.controls['email'].hasError('pattern') && form.controls['email'].touched" class="error">
-                    Debes usar un correo institucional.
+                <div *ngIf="form.controls['email'].hasError('pattern') && form.controls['email'].touched">
+                    <p class="text-danger">Debes usar un correo institucional.</p>
                 </div>
             </div>
             <div class="form-group mb-3">
@@ -147,7 +147,7 @@
             <li>Haz clic en "Enviar".</li>
             <li>Resiviras correo cuando tu reporte este resuelto.</li>
         </ol>
-        <p class="h2">FAQ</p>
+        <p class="h2">Preguntas frecuentes</p>
         <div class="accordion" id="accordionExample">
             <div class="accordion-item">
                 <h2 class="accordion-header">
