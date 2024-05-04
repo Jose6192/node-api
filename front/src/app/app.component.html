@@ -1,25 +1,74 @@
-<div class="container-fluid g-0">
+<!-- plantilla creada por codzsword -->
+<!-- repositorio: https://github.com/codzsword/bootstrap-sidebar -->
 
-  <ng-container *ngIf="isLogedIn(); else headerUser"> <!-- usuario identificado -->
-    <ng-container *ngIf="!tokenIsExpired(); else headerUser">
+<ng-container *ngIf="isLogedIn(); else headerUser"> <!-- usuario identificado -->
+  <ng-container *ngIf="!tokenIsExpired(); else headerUser">
+    <div class="wrapper">
+      <!-- Sidebar -->
+      <aside id="sidebar" [class.collapsed]="navCollapsed">
+        <div class="h-100">
+          <div class="sidebar-logo">
+            <a href="#">UT Riviera Maya</a>
+          </div>
+          <!-- Sidebar Navigation -->
+          <ul class="sidebar-nav">
+            <li class="sidebar-header">
+              herramientas
+            </li>
+            <li class="sidebar-item" *ngFor="let item of list">
+              <a routerLink="{{item.route}}" class="sidebar-link">
+                <i class=" {{item.icon}}"></i>
+                {{item.name}}
+              </a>
+            </li>
 
-      <app-header (sideNavToggled)="sideNavStatus = $event"></app-header>
-      <main>
-
-        <app-side-nav [sideNavStatus]="sideNavStatus" [ngClass]="{'app-side-nav-open': sideNavStatus}"></app-side-nav>
-        <div class="display-area p-3" [ngClass]="{'display-area-shrink': sideNavStatus}">
-          <router-outlet></router-outlet>
+          </ul>
         </div>
-
-      </main>
-    </ng-container>
-  </ng-container>
-
-  <ng-template #headerUser> <!-- usuario NO identidicado -->
-    <app-header-user></app-header-user>
-    <div class="mt-4">
-      <router-outlet></router-outlet>
+      </aside>
+      <!-- Main Component -->
+      <div class="main">
+        <nav class="navbar navbar-expand px-3 border-bottom d-flex justify-content-between">
+          <!-- Button for sidebar toggle -->
+          <button (click)="toggleNav()" class="btn" type="button">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <!-- Profile Logo -->
+            <div class="profile-logo dropstart">
+              <button class="btn dropdown-toggle" data-bs-toggle="dropdown">
+                <i class="bi bi-person-circle"></i>
+              </button>
+              <ul class="dropdown-menu">
+                <li class="form-check-reverse form-switch ">
+                  <div *ngIf="isDarkTheme; else moon">
+                    <label class="form-check-label" for="themeSwitch" #moon> <i class="bi bi-moon-fill"></i></label>
+                  </div>
+                  <ng-template #moon>
+                    <label class="form-check-label" for="themeSwitch"> <i class="bi bi-sun-fill"></i></label>
+                  </ng-template>
+                  <input class="form-check-input me-5" type="checkbox" id="themeSwitch" [(ngModel)]="isDarkTheme"
+                    (click)="toggleTheme()">
+                </li>
+                <li><a class="dropdown-item" href="#"><i class="bi bi-gear-fill"></i> configuracion</a></li>
+                <li><a class="dropdown-item text-danger" href="/signin" (click)="logOut()"><i class="bi bi-door-closed-fill"></i> Cerrar sesión</a></li>
+              </ul>
+            </div>   
+        </nav>
+        <main class="content px-3 py-2">
+          <div class="container-fluid">
+            <div class="mb-3">
+              <router-outlet></router-outlet>
+            </div>
+          </div>
+        </main>
+      </div>
     </div>
-  </ng-template>
+  </ng-container>
+</ng-container>
 
-</div>
+<!-- usuario NO identidicado -->
+<ng-template #headerUser>
+  <app-header-user></app-header-user>
+  <div class="mt-4">
+    <router-outlet></router-outlet>
+  </div>
+</ng-template>
