@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { TasksService } from '../../services/tasks.service';
-import Swal from 'sweetalert2';
+
 
 interface ReportForm{
   name: string;
@@ -59,23 +59,7 @@ export class ReportFormComponent{
           place: '',
           description: ''
         }
-      }, err => alert('Error: '+ err.status +' '+ err.error.message));
-
-      /* Swal.fire({
-        title: 'Tu reporte ha sido enviado',
-        icon: 'success',
-        confirmButtonText: 'ok',
-      }).then((result) => {
-        this.reportForm = {
-          name: '',
-          email: '',
-          department: '',
-          failType: '',
-          anotherFailType: '',
-          building: '',
-          place: ''
-        }
-      })  */     
+      }, err => alert('Error: '+ err.status +' '+ err.error.message));   
       
   };
 

@@ -19,6 +19,11 @@
                     <div class="alert alert-danger mb-4" *ngIf="signInForm.get('password')?.touched && signInForm.get('password')?.errors?.['required']" >
                         Contraseña obligatoria
                     </div>
+                    <div *ngIf="errorMessage">
+                        <div class="alert alert-danger mb-4">
+                            {{ errorMessage }}
+                        </div>
+                    </div>
                     <button class="btn btn-success btn-block" [disabled]="signInForm.invalid">
                         Iniciar sesion
                     </button>

@@ -14,13 +14,11 @@ import { SigninComponent } from './components/signin/signin.component';
 import { TaskComponent } from './components/tasks/task.component';
 import { ReportFormComponent } from './components/report-form/report-form.component';
 import { TaskHistoryComponent } from './components/task-history/task-history.component';
-import { HeaderComponent } from './components/header/header.component';
-import { SideNavComponent } from './components/side-nav/side-nav.component';
 
-/* import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2'; */
 import { HeaderUserComponent } from './components/header-user/header-user.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { StatisticsComponent } from './components/statistics/statistics.component';
 
 
 @NgModule({
@@ -31,11 +29,10 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     TaskComponent,
     ReportFormComponent,
     TaskHistoryComponent,
-    HeaderComponent,
-    SideNavComponent,
     HeaderUserComponent,
     FooterComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    StatisticsComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +40,6 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    /* SweetAlert2Module.forRoot(), */
     JwtModule.forRoot({
       config: {
         tokenGetter: function  tokenGetter() {

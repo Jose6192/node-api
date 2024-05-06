@@ -9,29 +9,7 @@ import { AuthService } from './services/auth.service';
 export class AppComponent {
 
   isDarkTheme?: boolean;
-  sideNavStatus: boolean = false;
   navCollapsed: boolean = false;
-
-  constructor(public authService: AuthService, ) { 
-    
-  }
-
-  ngOnInit(){ //introde en list los elementos que se mostraran en el side-nav dependiendo del rol del usuario
-    if(this.authService.getDataUser().role == 'Admin'){
-      console.log('admin');
-      for(let i = 0; i < this.admin.length; i++){
-        this.list.push(this.admin[i]);
-      }
-    }
-    if(this.authService.getDataUser().role == 'Sistemas'){
-      for(let i = 0; i < this.sistemas.length; i++){
-        this.list.push(this.sistemas[i]);
-      }
-    }
-    //aplica el tema 
-    this.isDarkTheme = localStorage.getItem('theme') === 'dark';
-    this.applyTheme();
-  }
 
   list = [
     { name: 'Inicio', icon: 'bi bi-house-door-fill', route: '/tasks' },
@@ -42,12 +20,37 @@ export class AppComponent {
 
   admin = [
     { name: 'Usuarios', icon: 'bi bi-people-fill', route: '/signup' },
-    { name: 'Ficha tecnica', icon: 'bi bi-pc', route: '/technical-form' }
+    { name: 'Ficha tecnica', icon: 'bi bi-pc', route: '/technical-form' },
+    { name: 'Estadisticas', icon: 'bi bi-bar-chart-line-fill', route: '/statistics' }
   ]
 
   sistemas = [
     { name: 'Ficha tecnica', icon: 'bi bi-file-earmark-text-fill', route: '/technical-form' }
   ]
+
+  constructor(public authService: AuthService) {}
+
+  ngOnInit(){
+    //aplica el tema
+    this.updateList(); 
+    this.isDarkTheme = localStorage.getItem('theme') === 'dark';
+    this.applyTheme();
+  }
+
+  updateList(){
+    //introde en list los elementos que se mostraran en el side-nav dependiendo del rol del usuario
+    if(this.authService.getDataUser().role == 'Admin'){
+      console.log('admin');
+      for(let i = 0; i < this.admin.length; i++){
+        this.list.push(this.admin[i]);
+      }
+    }
+    if(this.authService.getDataUser().role == 'Sistemas'){
+      for(let i = 0; i < this.sistemas.length; i++){
+        this.list.push(this.sistemas[i]);
+      }
+    }  
+  }
 
   logOut() {
     this.authService.logOut();
