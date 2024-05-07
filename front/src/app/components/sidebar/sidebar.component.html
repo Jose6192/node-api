@@ -1,0 +1,12 @@
+<ul class="sidebar-nav">
+    <li class="sidebar-header">
+      herramientas
+    </li>
+    <li class="sidebar-item" *ngFor="let item of list">
+      <a routerLink="{{item.route}}" class="sidebar-link">
+        <i class=" {{item.icon}}"></i>
+        {{item.name}}
+      </a>
+    </li>
+
+  </ul>

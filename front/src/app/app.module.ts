@@ -19,6 +19,7 @@ import { HeaderUserComponent } from './components/header-user/header-user.compon
 import { FooterComponent } from './components/footer/footer.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { StatisticsComponent } from './components/statistics/statistics.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { StatisticsComponent } from './components/statistics/statistics.componen
     HeaderUserComponent,
     FooterComponent,
     NotFoundComponent,
-    StatisticsComponent
+    StatisticsComponent,
+    SidebarComponent
   ],
   imports: [
     BrowserModule,
