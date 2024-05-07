@@ -31,4 +31,13 @@ export class TasksService {
   changePriority(id: string, updates: { priority: string }) {
     return this.http.patch<any>(this.URL + '/tasks/update/' + id, updates);
   }
+  getActiveTasksNumber() {
+    return this.http.get<any>(this.URL + '/tasks/active');
+  }
+  getResolvedTasksNumber() {
+    return this.http.get<any>(this.URL + '/tasks/resolved');
+  }
+  getTopUser() {
+    return this.http.get<any>(this.URL + '/tasks/top');
+  }
 }

@@ -1,65 +1,27 @@
-
-
-<div class="grey-bg container-fluid mb-3">
-    <section id="minimal-statistics">
-        <div class="row">
-            <div class="col-12 mt-3 mb-3">
-                <h4 class="text-uppercase">Estadisticas</h4>
-            </div>
+<section>
+    <div class="row">
+        <div class="col-12 mt-3 mb-3">
+            <h4 class="text-uppercase">Reporte Mensual</h4>
         </div>
-        <div class="row">
-            <div class="col-xl-4 col-sm-6 col-12">
-                <div class="card">
-                    <div class="card-content">
-                        <div class="card-body">
-                            <div class="media d-flex">
-                                <div class="align-self-center">
-                                    <i class="bi bi-bell-fill"></i>
-                                </div>
-                                <div class="media-body text-right">
-                                    <h3>5</h3>
-                                    <span>Reportes activos</span>
-                                </div>
+    </div>
+    <div class="row">
+        <div *ngFor=" let card of cardsData" class="col-xl-4 col-sm-6 col-12">
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-body">
+                        <div class="media d-flex justify-content-around">
+                            <div class="align-self-center">
+                                <i class=" {{card.icon}} fs-2"></i>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-4 col-sm-6 col-12">
-                <div class="card">
-                    <div class="card-content">
-                        <div class="card-body">
-                            <div class="media d-flex">
-                                <div class="align-self-center">
-                                    <i class="bi bi-bell-slash-fill float-left"></i>
-                                </div>
-                                <div class="media-body text-right">
-                                    <h3>46</h3>
-                                    <span>reportes resueltos</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-4 col-sm-6 col-12">
-                <div class="card">
-                    <div class="card-content">
-                        <div class="card-body">
-                            <div class="media d-flex">
-                                <div class="align-self-center">
-                                    <i class="bi bi-broadcast"></i>
-                                </div>
-                                <div class="media-body text-right">
-                                    <h3>john doe</h3>
-                                    <span>Mas reportes resueltos</span>
-                                </div>
+                            <div class="media-body text-end">
+                                <h3>{{card.data}}</h3>
+                                <span>{{card.title}}</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-</div>
-<canvas id="building">{{chart}}</canvas>
+    </div>
+</section>
+<canvas id="building" class="mt-3">{{chart}}</canvas>

@@ -121,6 +121,48 @@ router.patch('/tasks/upload/:taskId', verifyToken, multerConfig, async (req, res
     }
 });
 
+router.get('/tasks/active', verifyToken, async (req, res) => {
+    try {
+        const activeTasks = await Task.countDocuments({ status: 'pendiente' });
+        res.status(200).json({ count: activeTasks });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error al obtener las tareas' });
+    }
+});
+
+router.get('/tasks/resolved', verifyToken, async (req, res) => {
+    try {
+        const completedTaks = await Task.countDocuments({ status: 'completado' });
+        res.status(200).json({ count: completedTaks });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error al obtener las tareas' });
+    }
+});
+
+router.get('/tasks/top', verifyToken, async (req, res) => {
+    // 1. Agrupación por usuario y conteo de tareas resueltas
+    const tasksByUser = await Task.aggregate([
+      {
+        $group: {
+          _id: "$solvedby", // Agrupar por 'solvedby' (nombre del usuario)
+          count: { $sum: 1 }, // Contar las tareas resueltas por cada usuario
+        },
+      },
+    ]);
+  
+    // 2. Ordenar por conteo de tareas resueltas (descendente)
+    const sortedTasksByUser = tasksByUser.sort((a, b) => b.count - a.count);
+  
+    // 3. Obtener el nombre del usuario con la mayor cantidad de tareas resueltas
+    const topUser = sortedTasksByUser[0]._id;
+  
+    // 4. Enviar la respuesta con el nombre del usuario
+    res.json({ topUser });
+  });
+  
+
 module.exports = router;
 
 function verifyToken(req, res, next) {
