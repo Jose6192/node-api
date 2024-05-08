@@ -40,4 +40,7 @@ export class TasksService {
   getTopUser() {
     return this.http.get<any>(this.URL + '/tasks/top');
   }
+  getReportByBuilding() {
+    return this.http.get<any>(this.URL + '/tasks/building');
+  }
 }

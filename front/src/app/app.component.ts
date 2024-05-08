@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from './services/auth.service';
+import { UserService } from './services/user.service';
 
 @Component({
   selector: 'app-root',
@@ -10,8 +11,6 @@ export class AppComponent {
 
   isDarkTheme?: boolean;
   navCollapsed: boolean = false;
-
-
 
   constructor(public authService: AuthService) {}
 

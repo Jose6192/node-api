@@ -4,6 +4,7 @@ const Task = require('../models/task')
 const jwt = require('jsonwebtoken');
 const multerConfig = require('../config/multer');
 const path = require('path');
+const task = require('../models/task');
 
 router.get('/tasks/get', verifyToken, async (req, res) => {
     try {
@@ -104,7 +105,7 @@ router.patch('/tasks/upload/:taskId', verifyToken, multerConfig, async (req, res
     try {
         const taskId = req.params.taskId;
         const updates = req.body;
-        
+
         console.log(req.files);
         if (req.files) {
             // guardar rutas relativas
@@ -144,23 +145,33 @@ router.get('/tasks/resolved', verifyToken, async (req, res) => {
 router.get('/tasks/top', verifyToken, async (req, res) => {
     // 1. Agrupación por usuario y conteo de tareas resueltas
     const tasksByUser = await Task.aggregate([
-      {
-        $group: {
-          _id: "$solvedby", // Agrupar por 'solvedby' (nombre del usuario)
-          count: { $sum: 1 }, // Contar las tareas resueltas por cada usuario
+        {
+            $group: {
+                _id: "$solvedby", // Agrupar por 'solvedby' (nombre del usuario)
+                count: { $sum: 1 }, // Contar las tareas resueltas por cada usuario
+            },
         },
-      },
     ]);
-  
+
     // 2. Ordenar por conteo de tareas resueltas (descendente)
     const sortedTasksByUser = tasksByUser.sort((a, b) => b.count - a.count);
-  
+
     // 3. Obtener el nombre del usuario con la mayor cantidad de tareas resueltas
     const topUser = sortedTasksByUser[0]._id;
-  
+
     // 4. Enviar la respuesta con el nombre del usuario
     res.json({ topUser });
-  });
+});
+
+router.get('/tasks/building', async (req, res) => {
+    try {
+        const reportesPorEdificio = await Task.aggregate([ { $group: { _id: "$building", total: { $sum: 1 }  } } ]);
+        res.json({reportesPorEdificio});
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error al obtener el número de reportes por edificio' });
+    }
+});
   
 
 module.exports = router;
@@ -187,6 +198,8 @@ function verifyToken(req, res, next) {
         return res.status(401).json({ message: 'Token inválido' });
     }
 }
+
+
 
 
 async function getNextFolio() {

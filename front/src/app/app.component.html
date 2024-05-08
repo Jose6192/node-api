@@ -20,6 +20,7 @@
         <button (click)="toggleNav()" class="btn" type="button">
           <span class="navbar-toggler-icon"></span>
         </button>
+        
         <!-- Profile Logo -->
         <div class="profile-logo dropstart">
           <button class="btn dropdown-toggle" data-bs-toggle="dropdown">
@@ -27,10 +28,10 @@
           </button>
           <ul class="dropdown-menu">
             <li class="form-check-reverse form-switch ">
-              <div *ngIf="isDarkTheme; else moon">
+              <div *ngIf="isDarkTheme; else sun">
                 <label class="form-check-label" for="themeSwitch" #moon> <i class="bi bi-moon-fill"></i></label>
               </div>
-              <ng-template #moon>
+              <ng-template #sun>
                 <label class="form-check-label" for="themeSwitch"> <i class="bi bi-sun-fill"></i></label>
               </ng-template>
               <input class="form-check-input me-5" type="checkbox" id="themeSwitch" [(ngModel)]="isDarkTheme"
