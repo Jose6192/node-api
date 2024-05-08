@@ -24,6 +24,15 @@ export class AuthService {
     return !!localStorage.getItem('token');
   }
 
+  tokenIsExpired() {
+    const token = localStorage.getItem('token');
+    if(token){
+      return this.jwtHelper.isTokenExpired(token);
+    }else{
+      return console.log('error al obtener el token');
+    }
+  }
+
   logOut() {
     localStorage.removeItem('token');
     this.router.navigate(['/signin']);

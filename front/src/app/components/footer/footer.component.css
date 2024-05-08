@@ -1,0 +1,27 @@
+img {
+    width: 60px;
+}
+
+a {
+    color: inherit;
+}
+
+.pull-left {
+    float: left;
+}
+
+.pull-right {
+    float: right;
+}
+.footer .copyright {
+    padding: 15px 0;
+}
+
+nav {
+    display: flex;
+}
+
+li {
+    list-style: none;
+}
+

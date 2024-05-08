@@ -4,96 +4,108 @@
 <!-- create user modal -->
 <div class="modal fade" id="createUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Registrar usuario</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Crear usuario</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="signUpForm" (submit)="signUp()">
+                    <div class="form-group mb-4">
+                        <input type="text" formControlName="name" name="name" class="form-control" placeholder="Usuario"
+                            required autofocus>
+                    </div>
+                    <div class="alert alert-danger mb-4"
+                        *ngIf="signUpForm.get('name')?.touched && signUpForm.get('name')?.errors?.['required']">
+                        Nombre obligatorio
+                    </div>
+                    <div class="form-group mb-4">
+                        <input type="password" formControlName="password" name="password" class="form-control"
+                            placeholder="Contraseña" required>
+                    </div>
+                    <div class="alert alert-danger mb-4"
+                        *ngIf="signUpForm.get('password')?.touched && signUpForm.get('password')?.errors?.['required']">
+                        Contraseña obligatoria
+                    </div>
+                    <div class="form-group mb-4">
+                        <select formControlName="rol" name="rol" class="form-select" aria-label="Default select example"
+                            required>
+                            <option value="Sistemas">Sistemas</option>
+                            <option value="Mantenimiento">Mantenimiento</option>
+                        </select>
+                    </div>
+                    <div class="alert alert-danger mb-4"
+                        *ngIf="signUpForm.get('rol')?.touched && signUpForm.get('rol')?.errors?.['required']">
+                        Rol obligatorio
+                    </div>
+                    <div class="alert alert-danger mb-4" *ngIf="errorMessage">
+                        {{errorMessage}}
+                    </div>
+                    <div class="alert alert-success mb-4" *ngIf="successMessage">
+                        {{successMessage}}
+                    </div>
+                    <button class="btn btn-primary btn-block" [disabled]="signUpForm.invalid">
+                        Crear
+                    </button>
+                </form>
+            </div>
         </div>
-        <div class="modal-body">
-            <form [formGroup]="signUpForm" (submit)="signUp()">
-                <div class="form-group mb-4">
-                    <input type="text" formControlName="name" name="name" class="form-control" placeholder="Usuario" required autofocus>
-                </div>
-                <div class="alert alert-danger mb-4" *ngIf="signUpForm.get('name')?.touched && signUpForm.get('name')?.errors?.['required']" >
-                    Nombre obligatorio
-                </div>
-                <div class="form-group mb-4">
-                    <input type="password" formControlName="password" name="password" class="form-control" placeholder="Contraseña" required>
-                </div>
-                <div class="alert alert-danger mb-4" *ngIf="signUpForm.get('password')?.touched && signUpForm.get('password')?.errors?.['required']">
-                    Contraseña obligatoria
-                </div>
-                <div class="form-group mb-4">
-                    <select formControlName="rol" name="rol" class="form-select" aria-label="Default select example" required>
-                      <option value="Sistemas">Sistemas</option>
-                      <option value="Mantenimiento">Mantenimiento</option>
-                    </select>
-                </div>
-                <div class="alert alert-danger mb-4" *ngIf="signUpForm.get('rol')?.touched && signUpForm.get('rol')?.errors?.['required']">
-                    Rol obligatorio
-                </div>
-                <div class="alert alert-danger mb-4" *ngIf="errorMessage">
-                    {{errorMessage}}
-                </div>
-                <div class="alert alert-success mb-4" *ngIf="successMessage">
-                    {{successMessage}}
-                </div>                 
-                <button class="btn btn-primary btn-block" [disabled]="signUpForm.invalid">
-                    Registrar
-                </button>
-            </form>
-        </div>
-      </div>
     </div>
 </div>
 <!-- edit user modal -->
 <div class="modal fade" id="editUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Editar usuario</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Editar usuario</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="updateUserForm" (submit)="updateUser()">
+                    <div class="form-group mb-4">
+                        <input type="text" formControlName="name" name="name" class="form-control" required>
+                    </div>
+                    <div class="alert alert-danger mb-4"
+                        *ngIf="updateUserForm.get('name')?.touched && updateUserForm.get('name')?.errors?.['required']">
+                        Nombre obligatorio
+                    </div>
+                    <div class="form-group mb-4">
+                        <input type="password" formControlName="password" name="password" class="form-control"
+                            placeholder="Contraseña" required>
+                    </div>
+                    <div class="alert alert-danger mb-4"
+                        *ngIf="updateUserForm.get('password')?.touched && updateUserForm.get('password')?.errors?.['required']">
+                        Contraseña obligatoria
+                    </div>
+                    <div class="form-group mb-4">
+                        <select formControlName="rol" name="rol" class="form-select" aria-label="Default select example"
+                            required>
+                            <option value="Sistemas">Sistemas</option>
+                            <option value="Mantenimiento">Mantenimiento</option>
+                        </select>
+                    </div>
+                    <div class="alert alert-danger mb-4"
+                        *ngIf="updateUserForm.get('rol')?.touched && updateUserForm.get('rol')?.errors?.['required']">
+                        Rol obligatorio
+                    </div>
+                    <div class="alert alert-danger mb-4" *ngIf="errorMessage">
+                        {{errorMessage}}
+                    </div>
+                    <div class="alert alert-success mb-4" *ngIf="successMessage">
+                        {{successMessage}}
+                    </div>
+                    <button class="btn btn-primary btn-block" [disabled]="updateUserForm.invalid">
+                        Actualizar
+                    </button>
+                </form>
+            </div>
         </div>
-        <div class="modal-body">
-            <form [formGroup]="updateUserForm" (submit)="updateUser()">
-                <div class="form-group mb-4">
-                    <input type="text" formControlName="name" name="name" class="form-control" required>
-                </div>
-                <div class="alert alert-danger mb-4" *ngIf="updateUserForm.get('name')?.touched && updateUserForm.get('name')?.errors?.['required']" >
-                    Nombre obligatorio
-                </div>
-                <div class="form-group mb-4">
-                    <input type="password" formControlName="password" name="password" class="form-control" placeholder="Contraseña" required>
-                </div>
-                <div class="alert alert-danger mb-4" *ngIf="updateUserForm.get('password')?.touched && updateUserForm.get('password')?.errors?.['required']">
-                    Contraseña obligatoria
-                </div>
-                <div class="form-group mb-4">
-                    <select formControlName="rol" name="rol" class="form-select" aria-label="Default select example" required>
-                      <option value="Sistemas">Sistemas</option>
-                      <option value="Mantenimiento">Mantenimiento</option>
-                    </select>
-                </div>
-                <div class="alert alert-danger mb-4" *ngIf="updateUserForm.get('rol')?.touched && updateUserForm.get('rol')?.errors?.['required']">
-                    Rol obligatorio
-                </div>
-                <div class="alert alert-danger mb-4" *ngIf="errorMessage">
-                    {{errorMessage}}
-                </div>
-                <div class="alert alert-success mb-4" *ngIf="successMessage">
-                    {{successMessage}}
-                </div>                 
-                <button class="btn btn-primary btn-block" [disabled]="updateUserForm.invalid">
-                    Actualizar
-                </button>
-            </form>
-        </div>
-      </div>
     </div>
 </div>
 <!-- tabla de usuarios -->
 <div class="table-responsive">
-    <table class="table">
+    <table class="table table-striped caption-top">
+        <caption>Lista de usuarios</caption>
         <thead>
             <tr>
                 <th scope="col">#</th>
@@ -102,14 +114,15 @@
                 <th scope="col">Opciones</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="table-group-divider">
             <tr *ngFor="let user of this.users; let i = index">
-                <td>{{i + 1}}</td>
+                <th>{{i + 1}}</th>
                 <td>{{user.name}}</td>
                 <td>{{user.rol}}</td>
                 <td>
+                    <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editUser"
+                        (click)="selectUser(i)">Editar</button>
                     <button class="btn btn-danger mx-1" (click)="deleteUser(i)">Eliminar</button>
-                    <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editUser" (click)="selectUser(i)">Editar</button>
                 </td>
             </tr>
         </tbody>

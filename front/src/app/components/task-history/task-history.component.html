@@ -1,43 +1,40 @@
-
-    <div class="container mt-5">
-        <h2>Historial de Tareas Completadas</h2>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Título</th>
-                    <th scope="col">Descripción</th>
-                    <th scope="col">Ubicación</th>
-                    <th scope="col">departamento</th>
-                    <th scope="col">Prioridad</th>
-                    <th scope="col">Imágenes</th>
-                    <th scope="col">Fecha de Completado</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let task of completedTasks.slice(-6); let i = index">
-                    <th scope="row">{{i+1}}</th>
-                    <td>{{task.name}}</td>
-                    <td>{{task.title}}</td>
-                    <td>{{task.description}}</td>
-                    <td>{{task.location}}</td>
-                    <td>{{task.department}}</td>
-                    <td>{{task.priority}}</td>
-                    <td>
-                        <div class="dropdown">
-                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                              ver imagenes
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li *ngFor= "let image of task.imagePaths; let i = index"><a class="dropdown-item" href="{{imageURL + image}}" target="_blank" ><b>({{i+1}})</b>abrir</a></li>
-                            </ul>
-                        </div>
-                    </td>
-                    <td>{{task.completedTime | date: 'mediumDate'}}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    
+<div class="container table-responsive">
+    <h2>Historial de Tareas Completadas</h2>
+    <input type="text" class="form-control my-4" [(ngModel)]="filterText" placeholder="Buscar tareas...">
+    <table class="table table-striped caption-top">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Folio</th>
+                <th scope="col">Descripción</th>
+                <th scope="col">Ubicación</th>
+                <th scope="col">departamento</th>
+                <th scope="col">Fecha de Completado</th>
+                <th scope="col">Imágenes</th>
+            </tr>
+        </thead>
+        <tbody class="table-group-divider">
+            <tr *ngFor="let task of filteredTasks.slice(-visibleTasksCount); let i = index">
+                <th scope="row">{{i+1}}</th>
+                <td>{{task.folio}}</td>
+                <td>{{task.description}}</td>
+                <td>{{task.place}}</td>
+                <td>{{task.department}}</td>
+                <td>{{task.finalizedAt | date: 'mediumDate'}}</td>
+                <td>
+                    <div class="dropdown">
+                        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            ver imagenes
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li *ngFor="let image of task.imagePaths; let i = index"><a class="dropdown-item"
+                                    href="{{imageURL + image}}" target="_blank"><b>({{i+1}})</b>abrir</a></li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+            <button class="btn btn-primary mt-3" (click)="showMore()">Ver más</button>
+        </tbody>
+    </table>
+</div>

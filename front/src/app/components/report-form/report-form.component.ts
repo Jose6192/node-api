@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { TasksService } from '../../services/tasks.service';
-import Swal from 'sweetalert2';
+
 
 interface ReportForm{
   name: string;
@@ -10,6 +10,7 @@ interface ReportForm{
   anotherFailType: string;
   building: string;
   place: string;
+  description: string;
 }
 
 @Component({
@@ -21,6 +22,12 @@ interface ReportForm{
 
 export class ReportFormComponent{
 
+  building: string = 'Campus';
+
+  selectBuilding(building: string){
+    this.building = building;
+  }
+
   reportForm: ReportForm = {
     name: '',
     email: '',
@@ -28,7 +35,8 @@ export class ReportFormComponent{
     failType: '',
     anotherFailType: '',
     building: '',
-    place: ''
+    place: '',
+    description: ''
   }
 
   constructor( private taskService:TasksService ){}
@@ -40,7 +48,7 @@ export class ReportFormComponent{
   onSubmit():void{
     this.taskService.createTask(this.reportForm)
       .subscribe(res => {
-        alert(res.message);
+        alert(res.message + ' Su folio es: ' + res.folio);
         this.reportForm = {
           name: '',
           email: '',
@@ -48,25 +56,13 @@ export class ReportFormComponent{
           failType: '',
           anotherFailType: '',
           building: '',
-          place: ''
+          place: '',
+          description: ''
         }
-      }, err => alert('Error: '+ err.status +' '+ err.error.message));
-
-      /* Swal.fire({
-        title: 'Tu reporte ha sido enviado',
-        icon: 'success',
-        confirmButtonText: 'ok',
-      }).then((result) => {
-        this.reportForm = {
-          name: '',
-          email: '',
-          department: '',
-          failType: '',
-          anotherFailType: '',
-          building: '',
-          place: ''
-        }
-      })  */     
+      }, err => alert('Error: '+ err.status +' '+ err.error.message));   
       
   };
+
+
+
 }

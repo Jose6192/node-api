@@ -1,81 +1,127 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, } from '@angular/core';
 import { TasksService } from '../../services/tasks.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 
 @Component({
   selector: 'app-task',
   templateUrl: './task.component.html',
   styleUrls: ['./task.component.css']
 })
-export class TaskComponent implements OnInit{
+export class TaskComponent implements OnInit {
 
-  tasks: any[] = [];
-  selectedTask: any;
+  reports: any[] = [];
+  selectedReport: any;
+  selectedFile: any;
   imageURL = 'http://localhost:3000/imagen/'
+  compleateReportData = { finalizedAt: '', solvedby: '' }
 
-  constructor(public tasksService: TasksService, public authService: AuthService) { }
+  compleateForm: FormGroup;
+
+  constructor(public tasksService: TasksService, public authService: AuthService, private fb: FormBuilder) {
+    this.compleateForm = fb.group({
+      description: ['', Validators.required],
+      images: ['']
+    })
+  }
 
   ngOnInit() {
-    this.tasksService.getTasks()
-      .subscribe(
-        res => {
-          let tasks: any[] = res;
-          this.tasks = tasks.filter((task: any) => task.status === 'pending');
-        }
-      )
-  }
-  
-  onCardClick(task: any) { //alterna entre seleccionar y deseleccionar la misma tarjeta 
-    this.selectedTask = this.selectedTask === task ? null : task;
+    this.getReports();
   }
 
-  completeTask(i: number, task: any) {
-    const updates = {
-      status: 'completed',
-      completedTime: new Date()
-    };
-    this.tasksService.compleateTask(task._id, updates)
+  generateFormData() { //cuando se presiona el boton siguiente para mostrar los datos estaticos del formulario 
+    this.compleateReportData.finalizedAt = Date();
+    this.compleateReportData.solvedby = this.authService.getDataUser().name;
+  }
+
+  onSubmit() {
+    const formData = new FormData();
+    for (let i = 0; i < this.selectedFile?.length; i++) {
+      formData.append('images', this.selectedFile[i]);
+    }
+    formData.append('finalizedAt', this.compleateReportData.finalizedAt);
+    formData.append('solvedby', this.compleateReportData.solvedby);
+    formData.append('description', this.compleateForm.get('description')!.value);
+    formData.append('status', 'completado');
+    formData.append('imagePaths', '');
+    
+
+    this.tasksService.compleateTask(this.selectedReport._id, formData)
       .subscribe(
         res => {
-          this.tasks.splice(i, 1);
-        }
+          alert('Tarea completada con éxito');
+          location.reload();
+          this.compleateForm.reset();
+        },
+        err => console.log(err)
       );
   }
 
-  deleteTask(i: number, task:any){
-    let answer = confirm('¿Estas seguro de querer eliminarlo?');
-    if (!answer) return;
-    this.tasksService.deleteTask(task._id)
-      .subscribe();
-    this.tasks.splice(i,1) //elimina del arreglo la tarea para no tener que cargar la pagina
+  onFileSelect(event:any) {
+    this.selectedFile = event.target.files;
+    this.compleateForm.get('images')?.setValue(this.selectedFile);
   }
 
-  transferTask(i: number, task: any) {
+
+
+  selectReport(report: any) { //selecciona la tarea para mostrarla en el modal
+    this.selectedReport = this.selectedReport = report;
+  }
+
+  deleteReport(i: number, report: any) {
+    let answer = confirm('¿Estas seguro de querer eliminarlo?');
+    if (!answer) return;
+    this.tasksService.deleteTask(report._id)
+      .subscribe();
+    this.reports.splice(i, 1) //PROBLEMA AL ELIMINAR UNA TAREA
+  }
+
+  transferReport(i: number, report: any) {
     let answer = confirm('¿Estás seguro de querer transferir esta tarea?');
     if (answer) {
       // Cambiar el valor de departmento
-      const newDepartment = task.department === 'Sistemas' ? 'Mantenimiento' : 'Sistemas';
-  
+      const newDepartment = report.department === 'Sistemas' ? 'Mantenimiento' : 'Sistemas';
       const updates = { department: newDepartment };
-  
-      this.tasksService.transferTask(task._id, updates)
+      this.tasksService.transferTask(report._id, updates)
         .subscribe(
-          res => {
-            this.tasks.splice(i, 1); // Elimina del arreglo la tarea después de la solicitud exitosa
-          },
+          res => location.reload(),
           err => console.log(err)
         );
     }
   }
 
-  getRole(){
+  getRole() {
     const data = this.authService.getDataUser();
     return data.role;
   }
 
-  getVisibleTasks() {
-    let role = this.getRole();
-    return this.tasks.filter(task => role === 'Admin' || role === task.department);
+  getReports() {
+    this.tasksService.getTasks()
+      .subscribe(
+        res => {
+          let reports: any[] = res;
+          this.reports = reports.filter((report: any) => report.status === 'pendiente');
+          this.reports = this.getVisibleReports();
+        }
+      )
   }
-  
+
+  getVisibleReports() { //si se cambia la itecaion de las cards por una variable no funciona hay que usar getVisibleReports();
+    let role = this.getRole();
+    return this.reports.filter(report => role === 'Admin' || role === report.department);
+  }
+
+  changepriority(i: number, report: any, priority: string) {
+    const updates = {
+      priority: priority
+    }
+    this.tasksService.changePriority(report._id, updates)
+      .subscribe(
+        res => {
+          this.reports[i].priority = updates.priority;
+        }
+      );
+  }
+
 }

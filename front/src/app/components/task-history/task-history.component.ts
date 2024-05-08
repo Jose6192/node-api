@@ -11,6 +11,8 @@ export class TaskHistoryComponent implements OnInit {
 
   imageURL = 'http://localhost:3000/imagen/'
   completedTasks: any[] = [];
+  filterText: string = '';
+  visibleTasksCount: number = 6;
 
   constructor(private tasksService: TasksService, private authService: AuthService) { }
   
@@ -19,15 +21,30 @@ export class TaskHistoryComponent implements OnInit {
       .subscribe(
         res => {
           let tasks: any[] = res;
+          let filteredTasks: any[] = [];
           let role = this.getRole();
           if (role === 'Admin') {
-            this.completedTasks = tasks.filter((task: any) => task.status === 'completed');
+            filteredTasks = tasks.filter((task: any) => task.status === 'completado');
+            this.completedTasks = filteredTasks;
           } else {
             /* Si el usuario no es un administrador, filtra por rol */
-            this.completedTasks = tasks.filter((task: any) => task.status === 'completed' && (task.department === role));
+            tasks = tasks.filter((task: any) => task.status === 'completado' && (task.department === role));
           }
         }
       )
+  }
+
+  get filteredTasks() {
+    return this.completedTasks.filter(task =>
+      task.folio.includes(this.filterText) ||
+      task.description.includes(this.filterText) ||
+      task.place.includes(this.filterText) ||
+      task.department.includes(this.filterText)
+    );
+  }
+
+  showMore() {
+    this.visibleTasksCount += 6;
   }
 
   getRole(){

@@ -15,7 +15,12 @@ import { TaskComponent } from './components/tasks/task.component';
 import { ReportFormComponent } from './components/report-form/report-form.component';
 import { TaskHistoryComponent } from './components/task-history/task-history.component';
 
-import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { HeaderUserComponent } from './components/header-user/header-user.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
+import { StatisticsComponent } from './components/statistics/statistics.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
+
 
 @NgModule({
   declarations: [
@@ -24,7 +29,12 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     SigninComponent,
     TaskComponent,
     ReportFormComponent,
-    TaskHistoryComponent
+    TaskHistoryComponent,
+    HeaderUserComponent,
+    FooterComponent,
+    NotFoundComponent,
+    StatisticsComponent,
+    SidebarComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +42,6 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    SweetAlert2Module.forRoot(),
     JwtModule.forRoot({
       config: {
         tokenGetter: function  tokenGetter() {

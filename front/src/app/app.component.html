@@ -1,46 +1,67 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-  <div class="container-fluid">
-    <a class="navbar-brand" routerLink="/tasks">
-      <img src="../assets/img/logo-universidad.png" height="24" alt="logo UTRM">
-    </a>
-    
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+<!-- plantilla creada por codzsword -->
+<!-- repositorio: https://github.com/codzsword/bootstrap-sidebar -->
 
-    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-      <div class="navbar-nav">
-        <ng-container *ngIf="!authService.loggedIn(); else loggedIn">
-          <!-- public links -->
-          <a class="nav-link" routerLink="/report-form" routerLinkActive="active">Hacer un reporte</a>
-          <a class="nav-link" routerLink="/signin" routerLinkActive="active">Iniciar sesión</a>
-        </ng-container>
-        <!-- logged links -->
-        <ng-template #loggedIn>
-            <a class="nav-link" routerLink="/tasks" routerLinkActive="active">Tareas</a>
-            <a class="nav-link" routerLink="/report-form" routerLinkActive="active">Hacer un reporte</a>
-            <a class="nav-link" routerLink="/task-history" routerLinkActive="active">Historial de reportes</a>
-            <ng-container *ngIf="getRole() === 'Admin'">
-              <!-- only Admin -->
-            <a class="nav-link" routerLink="/signup" routerLinkActive="active">Administrar usuarios</a>
-            <a class="nav-link" routerLink="/technical-form" routerLinkActive="active">Generar ficha tecnica</a>
-            <a class="nav-link" role="button" (click)="authService.logOut()">Cerrar sesión</a>
-            </ng-container>
-            <ng-container *ngIf="getRole() === 'Sistemas'">
-              <!-- only Tecnico -->
-            <a class="nav-link" routerLink="/technical-form" routerLinkActive="active">Generar ficha tecnica</a>
-            <a class="nav-link" role="button" (click)="authService.logOut()">Cerrar sesión</a>
-            </ng-container>
-            <ng-container *ngIf="getRole() === 'Mantenimiento'">
-              <!-- only Mantenimiento -->
-            <a class="nav-link" role="button" (click)="authService.logOut()">Cerrar sesión</a>
-            </ng-container>
-        </ng-template>
+<ng-container *ngIf="isLogedIn() && !tokenIsExpired(); else headerUser"> <!-- usuario identificado -->
+  <div class="wrapper">
+    <!-- Sidebar -->
+    <aside id="sidebar" [class.collapsed]="navCollapsed">
+      <div class="h-100">
+        <div class="sidebar-logo">
+          <a href="#">UT Riviera Maya</a>
+        </div>
+        <!-- Sidebar Navigation -->
+        <app-sidebar></app-sidebar>
       </div>
+    </aside>
+    <!-- Main Component -->
+    <div class="main">
+      <nav class="navbar navbar-expand px-3 border-bottom d-flex justify-content-between">
+        <!-- Button for sidebar toggle -->
+        <button (click)="toggleNav()" class="btn" type="button">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <!-- Profile Logo -->
+        <div class="profile-logo dropstart">
+          <button class="btn dropdown-toggle" data-bs-toggle="dropdown">
+            <i class="bi bi-person-circle"></i>
+          </button>
+          <ul class="dropdown-menu">
+            <li class="form-check-reverse form-switch ">
+              <div *ngIf="isDarkTheme; else sun">
+                <label class="form-check-label" for="themeSwitch" #moon> <i class="bi bi-moon-fill"></i></label>
+              </div>
+              <ng-template #sun>
+                <label class="form-check-label" for="themeSwitch"> <i class="bi bi-sun-fill"></i></label>
+              </ng-template>
+              <input class="form-check-input me-5" type="checkbox" id="themeSwitch" [(ngModel)]="isDarkTheme"
+                (click)="toggleTheme()">
+            </li>
+            <li><a class="dropdown-item" href="#"><i class="bi bi-gear-fill"></i> configuracion</a></li>
+            <li><a class="dropdown-item text-danger" (click)="logOut()"><i
+                  class="bi bi-door-closed-fill"></i> Cerrar sesión</a></li>
+          </ul>
+        </div>
+      </nav>
+      <main class="content px-3 py-2">
+        <div class="container-fluid">
+          <div class="mb-3">
+            <router-outlet></router-outlet>
+          </div>
+        </div>
+      </main>
     </div>
   </div>
-</nav>
+</ng-container>
 
-<div class="container p-5">
-  <router-outlet></router-outlet>
-</div>
+<!-- usuario NO identidicado -->
+<ng-template #headerUser>
+  <app-header-user></app-header-user>
+  <main class="content px-3 pt-2">
+    <div class="container-fluid">
+      <div class="mb-3">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </main>
+</ng-template>
